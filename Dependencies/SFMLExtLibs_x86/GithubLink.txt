@@ -1,0 +1,1 @@
+https://github.com/SFML/SFML/tree/master/extlibs/libs-msvc/x86

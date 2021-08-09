@@ -1,0 +1,139 @@
+#version 150
+uniform float axisX;
+uniform float axisY;
+uniform float axisZ;
+uniform sampler3D sdf;
+uniform int loaded;
+uniform float winW;
+uniform float winH;
+uniform float progress;
+
+const float max_distance = 2048.0;
+const float sdf_epsilon = 0.001;
+const float normal_epsilon = 0.1;
+const int max_steps = 512;
+const float micro_step = normal_epsilon * 1.5;
+uniform mat3 matRotXZ;
+uniform mat3 matRotZY;
+uniform float zoom;
+
+float get_sdf(vec3 p){
+	vec3 texCoord = vec3((p.z+axisZ)/(2.0*axisZ),(p.y+axisY)/(2.0*axisY),(p.x+axisX)/(2.0*axisX));
+	return texture(sdf,texCoord).x;
+}
+
+
+float sdBox( vec3 p, vec3 b )
+{
+  vec3 q = abs(p) - b;
+  return length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0);
+}
+
+float primary_sdf(vec3 position){
+	float s = get_sdf(position);
+	return max(s,sdBox(position,vec3(axisX,axisY,axisZ)));
+
+}
+
+vec3 material(vec3 position, vec3 n){
+	return abs(n);
+	
+}
+
+
+//code copied from previous project, not very clean
+float march(vec3 origin, vec3 ray){
+
+	
+
+	float d = 0.0;
+	for(int i=0;i<max_steps;i++){
+		vec3 current = origin+ray*d;
+		float step = primary_sdf(current);
+
+
+		vec3 next = origin+ray*(d+step);
+		d=d+step;
+		
+		if(d>max_distance){
+			return -1.0;
+		}
+
+		if(step<sdf_epsilon){
+			return d;
+			break;
+		}
+		
+	}
+	
+	return -1.0;
+
+}
+
+vec3 get_normal(vec3 intersection, float march_distance){
+
+	float d = march_distance;
+
+	vec3 axis1 = intersection+vec3(1.0,0.0,0.0)*normal_epsilon;
+	vec3 axis2 = intersection+vec3(0.0,1.0,0.0)*normal_epsilon;
+	vec3 axis3 = intersection+vec3(0.0,0.0,1.0)*normal_epsilon;
+
+	float d1 = primary_sdf(axis1);
+	float d2 = primary_sdf(axis2);
+	float d3 = primary_sdf(axis3);
+
+	float r1 = d1/d;
+	float r2 = d2/d;
+	float r3 = d3/d;
+
+	vec3 n = normalize(vec3(r1,r2,r3));
+
+	return n;
+
+
+
+}
+
+
+
+void main() {
+
+	vec3 col = vec3(0.0);
+	vec2 uv = gl_FragCoord.xy/vec2(winW,winH)/gl_FragCoord.w-vec2(0.5);
+	
+
+	if(loaded==1){
+
+		vec3 corigin = vec3(0.0,0.0,-zoom);
+		corigin=matRotXZ*matRotZY*corigin;
+		vec2 uv_adj = vec2(uv.x,uv.y*winH/winW);
+		
+		if(gl_FragCoord.x/winW>progress)
+		{
+			col=vec3(1.0);
+		}else{
+			col=vec3(uv_adj.xy,0.0);
+		}
+		vec3 ray = normalize(vec3(uv_adj.xy,1.0));
+		ray=matRotXZ*matRotZY*ray;
+		float d = march(corigin,ray);
+		if(d>0.0){
+			vec3 pt= corigin+d*ray;
+			vec3 n = get_normal(pt,d);
+			col=material(pt,n);
+
+		}
+
+
+	}
+	else{
+		if(gl_FragCoord.x/winW>progress)
+		{
+			col=vec3(1.0,0.0,0.0);
+		}else{
+			col=vec3(0.0,0.0,1.0);
+		}
+	}
+
+	gl_FragColor = vec4(col,1.0);
+}
