@@ -382,13 +382,13 @@ namespace Geometry {
             ret = clEnqueueNDRangeKernel(cq, kernel, 2, NULL, globalws, localws, 0, NULL, NULL);
             ret = clEnqueueReadBuffer(cq, bfield, CL_TRUE, 0, data_size * sizeof(float), (void*)field, 0, NULL, NULL);
             
-            /*
+            
             for (unsigned int i = 0; i < DATA_SIZE; i++) {
                 if (field[i]==2048.0) {
                     field[i] = 0.0;
                 }
             }
-            */
+            
             
 
 
