@@ -9,10 +9,25 @@
 using glm::vec3;
 using Geometry::triangle;
 using glm::mat3;
+using glm::length;
+using std::max;
+using std::min;
 namespace Geometry {
     
+
+    vec3 maxv(vec3 a, vec3 b) {
+        return vec3(max(a.x, b.x), max(a.y, b.y), max(a.z, b.z));
+    }
+
+    float sdBox(vec3 p, vec3 b)
+    {
+        vec3 q = abs(p) - b;
+        return length(maxv(q, vec3(0.0))) + min(max(q.x, max(q.y, q.z)), 0.0);
+    }
+
+
     constexpr float micro_step = 1.5 * 0.001;
-    constexpr int GLOBAL_LOCAL_RATIO = 32;
+  
     float dot2(glm::vec3 v) { return glm::dot(v, v); }
     constexpr float signf(float f) { return f >= 0.0 ? 1.0 : -1.0; }
     constexpr float minf(float a, float b) { return a < b ? a : b; };
@@ -254,10 +269,10 @@ namespace Geometry {
 
             cl_int ret;
             cl_int data_size = DATA_SIZE;
-            size_t localws[2] = { data_size/GLOBAL_LOCAL_RATIO ,data_size / GLOBAL_LOCAL_RATIO };
-            size_t globalws[2] = { data_size,data_size};
+            size_t localws[3] = { data_size/GLOBAL_LOCAL_RATIO ,data_size / GLOBAL_LOCAL_RATIO,data_size / GLOBAL_LOCAL_RATIO };
+            size_t globalws[3] = { data_size,data_size,data_size};
 
-            ret = clEnqueueNDRangeKernel(cq, kernel, 2, NULL, globalws, localws, 0, NULL, NULL);
+            ret = clEnqueueNDRangeKernel(cq, kernel, 3, NULL, globalws, localws, 0, NULL, NULL);
             ret = clEnqueueReadBuffer(cq, bfield, CL_TRUE, 0, data_size * sizeof(float), (void*)field, 0, NULL, NULL);
 
             if (cn < chunks.size() - 1) {
@@ -299,6 +314,7 @@ namespace Geometry {
         }
         for (int i = 0; i < DATA_SIZE; i++) {
             field[i] = 2048.0;
+            //field[i] = micro_step*2.0;
         }
         thickness[0] = tri_thickness;
         ds[0] = DATA_SIZE;

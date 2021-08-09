@@ -10,12 +10,21 @@ uniform float progress;
 
 const float max_distance = 2048.0;
 const float sdf_epsilon = 0.001;
-const float normal_epsilon = 0.1;
+const float normal_epsilon = 0.005;
 const int max_steps = 512;
-const float micro_step = normal_epsilon * 1.5;
+const float s_bias = 0.005;
+const float s_strength = 0.025;
 uniform mat3 matRotXZ;
 uniform mat3 matRotZY;
 uniform float zoom;
+uniform float axs;
+const float pi=3.141592;
+
+//three point lighting
+const int nl=32;
+
+//funcdefs
+float march(vec3 origin, vec3 ray);
 
 float get_sdf(vec3 p){
 	vec3 texCoord = vec3((p.z+axisZ)/(2.0*axisZ),(p.y+axisY)/(2.0*axisY),(p.x+axisX)/(2.0*axisX));
@@ -29,15 +38,42 @@ float sdBox( vec3 p, vec3 b )
   return length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0);
 }
 
+float sdCappedCylinder( vec3 p, float h, float r )
+{
+  vec2 d = abs(vec2(length(p.xz),p.y)) - vec2(h,r);
+  return min(max(d.x,d.y),0.0) + length(max(d,0.0));
+}
+
 float primary_sdf(vec3 position){
 	float s = get_sdf(position);
-	return max(s,sdBox(position,vec3(axisX,axisY,axisZ)));
+	float disc_h = 0.1;
+	return min(max(s,sdBox(position,vec3(axisX,axisY,axisZ))),sdCappedCylinder(position-(vec3(0.0,-axisY/axs,0.0)-vec3(0.0,disc_h/2.0,0.0)),2.0*max(axisX,axisZ),0.1));
 
 }
 
-vec3 material(vec3 position, vec3 n){
-	return abs(n);
+//todo: change to circular ring of N lights (maybe 16, 32)
+float light(vec3 position, vec3 n){
+
+	float l=1.0;
+	for(int i=0;i<nl;i++){
+		float a=float(i)/float(nl)*2.0*pi;
+		vec3 np = position+n*s_bias;
+		vec3 ld = normalize(vec3(0.0*1.2*axisX*cos(a),1.5*axisY,0.0*1.2*axisZ*sin(a))-np);
+		
+		float d = march(np,ld);
+		if(d<sdf_epsilon){
+			l-=s_strength;
+		}
+	}
 	
+
+	return l;
+}
+
+
+vec3 material(vec3 position, vec3 n){
+	return light(position,n)*(-n.yyy);
+	//return light(position,n)*vec3(1.0);
 }
 
 
@@ -98,6 +134,7 @@ vec3 get_normal(vec3 intersection, float march_distance){
 
 void main() {
 
+	
 	vec3 col = vec3(0.0);
 	vec2 uv = gl_FragCoord.xy/vec2(winW,winH)/gl_FragCoord.w-vec2(0.5);
 	

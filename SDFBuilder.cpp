@@ -76,6 +76,7 @@ constexpr float zoomSpeed = 1.0;
 constexpr float minCameraZoom = 2.0;
 static HWND handle;
 constexpr float axes_scale = 1.2;
+constexpr float ozylim = pi / 2.0 * 0.8;
 
 //opengl memory locations
 static GLuint _id_sdfTex;
@@ -90,6 +91,7 @@ static GLuint _id_uniform_winH;
 static GLuint _id_uniform_matRotXZ;
 static GLuint _id_uniform_matRotZY;
 static GLuint _id_uniform_zoom;
+static GLuint _id_uniform_axs;
 
 
 //ray marching shader
@@ -111,6 +113,9 @@ void mousedrag(int dX, int dY) {
     rotXZ -= dOXZ;
     float dOZY = (float)dY * orbitSpeed;
     rotZY -= dOZY;
+    if (fabs(rotZY) > ozylim) {
+        rotZY += dOZY;
+    }
 }
 
 void OpenCL_Test() {
@@ -308,6 +313,8 @@ void calc_field(int group) {
 }
 
 void process_stl() {
+    progress = 0.0f;
+    sample_count = 0;
     worker_running = 1;
 
     std::string inputFilenameA = Utils::convertWtoA(inputFilename);
@@ -328,15 +335,15 @@ void process_stl() {
         triangle tri = triangle(vec3(data[3], data[4], data[5]),
             vec3(data[6], data[7], data[8]),
             vec3(data[9], data[10], data[11]));
-        
+
         tri.A = Utils::swapYZ(tri.A);
         tri.B = Utils::swapYZ(tri.B);
         tri.C = Utils::swapYZ(tri.C);
 
 
-            triangles.push_back(tri);
+        triangles.push_back(tri);
 
-        
+
         if (i == 0) {
             minx = tri.minx(); maxx = tri.maxx();
             miny = tri.miny(); maxy = tri.maxy();
@@ -354,7 +361,7 @@ void process_stl() {
 
         }
 
-        
+
 
 
         fseek(fl, 2, SEEK_CUR);
@@ -373,15 +380,15 @@ void process_stl() {
     stl_maxZ = maxz;
 
     const float ranges[] = { stl_rangex,stl_rangey,stl_rangez };
-    const float minrange = std::min({stl_rangex,stl_rangey,stl_rangez});
+    const float minrange = std::min({ stl_rangex,stl_rangey,stl_rangez });
     if (minrange == ranges[0]) {
         resx = (int)((float)min_resolution);
-        resy = (int)((float)min_resolution*stl_rangey/minrange);
+        resy = (int)((float)min_resolution * stl_rangey / minrange);
         resz = (int)((float)min_resolution * stl_rangez / minrange);
     }
     if (minrange == ranges[1]) {
         resy = (int)((float)min_resolution);
-        resx = (int)((float)min_resolution * stl_rangex/ minrange);
+        resx = (int)((float)min_resolution * stl_rangex / minrange);
         resz = (int)((float)min_resolution * stl_rangez / minrange);
     }
     if (minrange == ranges[2]) {
@@ -390,22 +397,6 @@ void process_stl() {
         resx = (int)((float)min_resolution * stl_rangex / minrange);
     }
 
-    unsigned int num_items = resx * resy * resz; //rgb data where r=g=b=sdf value
-    unsigned int num_data_items = num_items * 3;
-    GROUPS = num_items / group_amt +1;
-    texData.clear();
-    indices.clear();
-    //texData.reserve(num_data_items);
-    for (unsigned int i = 0; i < num_data_items; i++) {
-        texData.push_back(0.0f);
-    }
-    for (int ix = 0; ix < resx; ix++) {
-        for (int iy = 0; iy < resy; iy++) {
-            for (int iz = 0; iz < resz; iz++) {
-                indices.push_back(glm::ivec3(ix,iy,iz));
-            }
-        }
-    }
 
     CONSOLE_PRINTF_512("stl min x: %f\n", minx);
     CONSOLE_PRINTF_512("stl min y: %f\n", miny);
@@ -414,9 +405,45 @@ void process_stl() {
     CONSOLE_PRINTF_512("stl max y: %f\n", maxy);
     CONSOLE_PRINTF_512("stl max z: %f\n", maxz);
 
-    axisX = axes_scale*(maxx - minx) / minrange;
+    axisX = axes_scale * (maxx - minx) / minrange;
     axisY = axes_scale * (maxy - miny) / minrange;
     axisZ = axes_scale * (maxz - minz) / minrange;
+
+    unsigned int num_items = resx * resy * resz; //rgb data where r=g=b=sdf value
+    unsigned int num_data_items = num_items * 3;
+    GROUPS = num_items / group_amt + 1;
+    texData.clear();
+    indices.clear();
+    //texData.reserve(num_data_items);
+   
+
+
+    for (int ix = 0; ix < resx; ix++) {
+        for (int iy = 0; iy < resy; iy++) {
+            for (int iz = 0; iz < resz; iz++) {
+                indices.push_back(glm::ivec3(ix,iy,iz));
+            }
+        }
+    }
+
+    for (unsigned int ii = 0; ii < indices.size(); ii++) {
+
+        glm::ivec3 ip = indices[ii];
+        int ix = ip.x;
+        int iy = ip.y;
+        int iz = ip.z;
+        float x = -axisX + ((float)ix / (float)resx) * 2.0 * axisX;
+        float y = -axisY + ((float)iy / (float)resy) * 2.0 * axisY;
+        float z = -axisZ + ((float)iz / (float)resz) * 2.0 * axisZ;
+      //  float fdef = std::max(Geometry::sdBox(vec3(x, y, z), vec3(axisX, axisY, axisZ)),-Geometry::sdBox(vec3(x, y, z), vec3(axisX / 2.0, axisY / 2.0, axisZ / 2.0)));
+        float fdef = 0.0;
+        
+        texData.push_back(fdef);
+        texData.push_back(fdef);
+        texData.push_back(fdef);
+
+    }
+
 
     for (unsigned long it = 0; it < triangles.size(); it++) {
         triangle tri = triangles[it];
@@ -490,6 +517,7 @@ int event_loop() {
         else if (event.type == sf::Event::MouseButtonReleased) {
 
             dragging = 0;
+            old_mouse_position = sf::Vector2i(-1,-1);
 
         }
 
@@ -600,6 +628,7 @@ void retrieve_uniform_ids() {
     _id_uniform_matRotXZ = glGetUniformLocation(shader.ID, "matRotXZ");
     _id_uniform_matRotZY = glGetUniformLocation(shader.ID, "matRotZY");
     _id_uniform_zoom = glGetUniformLocation(shader.ID, "zoom");
+    _id_uniform_axs= glGetUniformLocation(shader.ID, "axs");
 }
 
 
@@ -617,6 +646,7 @@ void set_uniforms() {
     glUniform1f(_id_uniform_zoom, zoom);
     matRotZY = Geometry::rotZYMat3(rotZY);
     glUniformMatrix3fv(_id_uniform_matRotZY, 1, GL_FALSE, &matRotZY[0][0]);
+    glUniform1f(_id_uniform_axs, axes_scale);
 }
 
 void setup_vertices() {
@@ -713,9 +743,11 @@ int main() {
 
 
 void DragDropCallback(wchar_t * fileName) {
-    inputFilename = std::wstring(fileName);
-    worker = std::thread(process_stl);
-    worker.detach();
+    if (!worker_running) {
+        inputFilename = std::wstring(fileName);
+        worker = std::thread(process_stl);
+        worker.detach();
+    }
 }
 
 //open a window without console
