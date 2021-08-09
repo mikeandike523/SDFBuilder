@@ -10,10 +10,10 @@ uniform float progress;
 
 const float max_distance = 2048.0;
 const float sdf_epsilon = 0.001;
-const float normal_epsilon = 0.005;
+const float normal_epsilon = 0.006;
 const int max_steps = 512;
-const float s_bias = 0.005;
-const float s_strength = 0.025;
+const float s_bias = 0.010;
+const float s_strength = 0.005;
 uniform mat3 matRotXZ;
 uniform mat3 matRotZY;
 uniform float zoom;
@@ -57,11 +57,24 @@ float light(vec3 position, vec3 n){
 	float l=1.0;
 	for(int i=0;i<nl;i++){
 		float a=float(i)/float(nl)*2.0*pi;
-		vec3 np = position+n*s_bias;
-		vec3 ld = normalize(vec3(0.0*1.2*axisX*cos(a),1.5*axisY,0.0*1.2*axisZ*sin(a))-np);
+		vec3 np = position+s_bias*n;
+		vec3 lp=vec3(1.5*axisX*cos(a),2.5*axisY,1.5*axisZ*sin(a));
+		vec3 ld = normalize(lp-np);
 		
 		float d = march(np,ld);
-		if(d<sdf_epsilon){
+		if(d>sdf_epsilon){
+			l-=s_strength;
+		}
+	}
+
+	for(int i=0;i<nl;i++){
+		float a=float(i)/float(nl)*2.0*pi;
+		vec3 np = position+s_bias*n;
+		vec3 lp=vec3(1.5*axisX*cos(a),0.5*axisY,1.5*axisZ*sin(a));
+		vec3 ld = normalize(lp-np);
+		
+		float d = march(np,ld);
+		if(d>sdf_epsilon){
 			l-=s_strength;
 		}
 	}
@@ -72,8 +85,8 @@ float light(vec3 position, vec3 n){
 
 
 vec3 material(vec3 position, vec3 n){
-	return (n.yyy);
-	//return light(position,n)*vec3(1.0);
+	//return (n.yyy);
+	return light(position,n)*vec3(1.0);
 }
 
 
