@@ -948,7 +948,7 @@
        Overriding target "ComputeMetaGenInputs" in project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.MetaGen.targets" with target "ComputeMetaGenInputs" from project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets".
        Overriding target "GetNativeManifest" in project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" with target "GetNativeManifest" from project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets".
        Overriding target "GetTargetPathWithTargetPlatformMoniker" in project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" with target "GetTargetPathWithTargetPlatformMoniker" from project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.Cpp.DesignTime.targets".
-Build started 8/9/2021 3:51:04 AM.
+Build started 8/9/2021 12:44:34 PM.
 Logging verbosity is set to: Detailed.     1>Project "D:\Projects\SDFBuilder\SDFBuilder.vcxproj" on node 2 (Build target(s)).
      1>Building with tools version "Current".
        Target "EnableIntermediateOutputPathMismatchWarning" skipped, due to false condition; ('$(RestoreProjectStyle)' == 'PackageReference') was evaluated as ('' == 'PackageReference').
@@ -975,7 +975,7 @@ Logging verbosity is set to: Detailed.     1>Project "D:\Projects\SDFBuilder\SDF
          VSTEL_SolutionSessionID={7EC2229A-8365-4411-A67B-33ED23F34B60}
        Done executing task "SetEnv".
        Task "SetEnv"
-         VSTEL_CurrentSolutionBuildID=702857913
+         VSTEL_CurrentSolutionBuildID=734868239
        Done executing task "SetEnv".
        Task "SetEnv"
          VSTEL_ProjectID={458ee481-a3ef-4e1a-89b7-10ea038bc3a4}
@@ -1247,6 +1247,7 @@ Logging verbosity is set to: Detailed.     1>Project "D:\Projects\SDFBuilder\SDF
        Task "VCMessage" skipped, due to false condition; ('%(ClCompile.ExcludedFromBuild)' != 'true' and '%(Filename)%(Extension)' != '@(ClCompile->'%(Filename)%(Extension)')' and '%(ObjectFileName)' == '@(ClCompile->Metadata(ObjectFileName)->Distinct())') was evaluated as ('' != 'true' and 'imgui_tables.cpp' != 'imgui_tables.cpp' and 'Debug\' == 'Debug\').
        Task "VCMessage" skipped, due to false condition; ('%(ClCompile.ExcludedFromBuild)' != 'true' and '%(Filename)%(Extension)' != '@(ClCompile->'%(Filename)%(Extension)')' and '%(ObjectFileName)' == '@(ClCompile->Metadata(ObjectFileName)->Distinct())') was evaluated as ('' != 'true' and 'imgui_widgets.cpp' != 'imgui_widgets.cpp' and 'Debug\' == 'Debug\').
        Task "VCMessage" skipped, due to false condition; ('%(ClCompile.ExcludedFromBuild)' != 'true' and '%(Filename)%(Extension)' != '@(ClCompile->'%(Filename)%(Extension)')' and '%(ObjectFileName)' == '@(ClCompile->Metadata(ObjectFileName)->Distinct())') was evaluated as ('' != 'true' and 'imgui-SFML.cpp' != 'imgui-SFML.cpp' and 'Debug\' == 'Debug\').
+       Task "VCMessage" skipped, due to false condition; ('%(ClCompile.ExcludedFromBuild)' != 'true' and '%(Filename)%(Extension)' != '@(ClCompile->'%(Filename)%(Extension)')' and '%(ObjectFileName)' == '@(ClCompile->Metadata(ObjectFileName)->Distinct())') was evaluated as ('' != 'true' and 'DragDrop.cpp' != 'DragDrop.cpp' and 'Debug\' == 'Debug\').
        Task "VCMessage" skipped, due to false condition; ('%(ClCompile.ExcludedFromBuild)' != 'true' and '%(Filename)%(Extension)' != '@(ClCompile->'%(Filename)%(Extension)')' and '%(ObjectFileName)' == '@(ClCompile->Metadata(ObjectFileName)->Distinct())') was evaluated as ('' != 'true' and 'Geometry.cpp' != 'Geometry.cpp' and 'Debug\' == 'Debug\').
        Task "VCMessage" skipped, due to false condition; ('%(ClCompile.ExcludedFromBuild)' != 'true' and '%(Filename)%(Extension)' != '@(ClCompile->'%(Filename)%(Extension)')' and '%(ObjectFileName)' == '@(ClCompile->Metadata(ObjectFileName)->Distinct())') was evaluated as ('' != 'true' and 'SDFBuilder.cpp' != 'SDFBuilder.cpp' and 'Debug\' == 'Debug\').
        Task "VCMessage" skipped, due to false condition; ('%(ClCompile.ExcludedFromBuild)' != 'true' and '%(Filename)%(Extension)' != '@(ClCompile->'%(Filename)%(Extension)')' and '%(ObjectFileName)' == '@(ClCompile->Metadata(ObjectFileName)->Distinct())') was evaluated as ('' != 'true' and 'Utils.cpp' != 'Utils.cpp' and 'Debug\' == 'Debug\').
@@ -1279,40 +1280,56 @@ Logging verbosity is set to: Detailed.     1>Project "D:\Projects\SDFBuilder\SDF
        Task "CL"
          Read Tracking Logs:
          	Debug\SDFBuilder.tlog\CL.read.1.tlog
-         Outputs for D:\PROJECTS\SDFBUILDER\DEPENDENCIES\IMGUI-MASTER\IMGUI.CPP|D:\PROJECTS\SDFBUILDER\DEPENDENCIES\IMGUI-MASTER\IMGUI_DEMO.CPP|D:\PROJECTS\SDFBUILDER\DEPENDENCIES\IMGUI-MASTER\IMGUI_DRAW.CPP|D:\PROJECTS\SDFBUILDER\DEPENDENCIES\IMGUI-MASTER\IMGUI_TABLES.CPP|D:\PROJECTS\SDFBUILDER\DEPENDENCIES\IMGUI-MASTER\IMGUI_WIDGETS.CPP|D:\PROJECTS\SDFBUILDER\DEPENDENCIES\IMGUI-SFML-MASTER\IMGUI-SFML.CPP|D:\PROJECTS\SDFBUILDER\GEOMETRY.CPP|D:\PROJECTS\SDFBUILDER\SDFBUILDER.CPP|D:\PROJECTS\SDFBUILDER\UTILS.CPP:
+         Outputs for D:\PROJECTS\SDFBUILDER\DEPENDENCIES\IMGUI-MASTER\IMGUI.CPP|D:\PROJECTS\SDFBUILDER\DEPENDENCIES\IMGUI-MASTER\IMGUI_DEMO.CPP|D:\PROJECTS\SDFBUILDER\DEPENDENCIES\IMGUI-MASTER\IMGUI_DRAW.CPP|D:\PROJECTS\SDFBUILDER\DEPENDENCIES\IMGUI-MASTER\IMGUI_TABLES.CPP|D:\PROJECTS\SDFBUILDER\DEPENDENCIES\IMGUI-MASTER\IMGUI_WIDGETS.CPP|D:\PROJECTS\SDFBUILDER\DEPENDENCIES\IMGUI-SFML-MASTER\IMGUI-SFML.CPP|D:\PROJECTS\SDFBUILDER\DRAGDROP.CPP|D:\PROJECTS\SDFBUILDER\GEOMETRY.CPP|D:\PROJECTS\SDFBUILDER\SDFBUILDER.CPP|D:\PROJECTS\SDFBUILDER\UTILS.CPP:
          	D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI.OBJ
          	D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_DEMO.OBJ
          	D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_DRAW.OBJ
          	D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_TABLES.OBJ
          	D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_WIDGETS.OBJ
          	D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI-SFML.OBJ
+         	D:\PROJECTS\SDFBUILDER\DEBUG\DRAGDROP.OBJ
          	D:\PROJECTS\SDFBUILDER\DEBUG\GEOMETRY.OBJ
          	D:\PROJECTS\SDFBUILDER\DEBUG\SDFBUILDER.OBJ
          	D:\PROJECTS\SDFBUILDER\DEBUG\UTILS.OBJ
-         SDFBuilder.cpp will be compiled because D:\Projects\SDFBuilder\SDFBuilder.cpp was modified at 8/9/2021 3:51:02 AM.
-         Outputs for D:\PROJECTS\SDFBUILDER\SDFBUILDER.CPP:
-         	D:\PROJECTS\SDFBUILDER\DEBUG\SDFBUILDER.OBJ
+         Geometry.cpp will be compiled because D:\Projects\SDFBuilder\Geometry.cpp was modified at 8/9/2021 12:44:16 PM.
+         SDFBuilder.cpp will be compiled because D:\PROJECTS\SDFBUILDER\GEOMETRY.H was modified at 8/9/2021 12:44:26 PM.
+         No output for D:\PROJECTS\SDFBUILDER\GEOMETRY.CPP|D:\PROJECTS\SDFBUILDER\SDFBUILDER.CPP was found in the tracking log; source compilation required.
          Write Tracking Logs:
          	Debug\SDFBuilder.tlog\CL.write.1.tlog
          Environment Variables passed to tool:
-           VS_UNICODE_OUTPUT=1688
-         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\bin\HostX86\x86\CL.exe /c /I"D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\include" /I"D:\Projects\SDFBuilder\Dependencies\glew-2.1.0\include" /I"D:\Projects\SDFBuilder\Dependencies\glm-master" /I"D:\Projects\SDFBuilder\Dependencies\opencl-sdk\include" /I"D:\Projects\SDFBuilder\Dependencies\imgui-master" /I"D:\Projects\SDFBuilder\Dependencies\imgui-sfml-master" /ZI /JMC /nologo /W3 /WX- /diagnostics:column /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /permissive- /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc142.pdb" /external:env:EXTERNAL_INCLUDE /external:W3 /Gd /TP /analyze- /FC /errorReport:prompt SDFBuilder.cpp
+           VS_UNICODE_OUTPUT=2792
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\bin\HostX86\x86\CL.exe /c /I"D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\include" /I"D:\Projects\SDFBuilder\Dependencies\glew-2.1.0\include" /I"D:\Projects\SDFBuilder\Dependencies\glm-master" /I"D:\Projects\SDFBuilder\Dependencies\opencl-sdk\include" /I"D:\Projects\SDFBuilder\Dependencies\imgui-master" /I"D:\Projects\SDFBuilder\Dependencies\imgui-sfml-master" /ZI /JMC /nologo /W3 /WX- /diagnostics:column /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /permissive- /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc142.pdb" /external:env:EXTERNAL_INCLUDE /external:W3 /Gd /TP /analyze- /FC /errorReport:prompt Geometry.cpp SDFBuilder.cpp
          Tracking command:
-         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Tracker.exe /d "C:\Program Files (x86)\MSBuild\15.0\FileTracker\FileTracker32.dll" /i D:\Projects\SDFBuilder\Debug\SDFBuilder.tlog /r D:\PROJECTS\SDFBUILDER\SDFBUILDER.CPP /b MSBuildConsole_CancelEventc859311586c049bb8d79467053161ae9  /c "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\bin\HostX86\x86\CL.exe"  /c /I"D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\include" /I"D:\Projects\SDFBuilder\Dependencies\glew-2.1.0\include" /I"D:\Projects\SDFBuilder\Dependencies\glm-master" /I"D:\Projects\SDFBuilder\Dependencies\opencl-sdk\include" /I"D:\Projects\SDFBuilder\Dependencies\imgui-master" /I"D:\Projects\SDFBuilder\Dependencies\imgui-sfml-master" /ZI /JMC /nologo /W3 /WX- /diagnostics:column /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /permissive- /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc142.pdb" /external:env:EXTERNAL_INCLUDE /external:W3 /Gd /TP /analyze- /FC /errorReport:prompt SDFBuilder.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Tracker.exe /d "C:\Program Files (x86)\MSBuild\15.0\FileTracker\FileTracker32.dll" /i D:\Projects\SDFBuilder\Debug\SDFBuilder.tlog /r "D:\PROJECTS\SDFBUILDER\GEOMETRY.CPP|D:\PROJECTS\SDFBUILDER\SDFBUILDER.CPP" /b MSBuildConsole_CancelEventdfd04760fbbd4283b96be879ad2eec52  /c "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\bin\HostX86\x86\CL.exe"  /c /I"D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\include" /I"D:\Projects\SDFBuilder\Dependencies\glew-2.1.0\include" /I"D:\Projects\SDFBuilder\Dependencies\glm-master" /I"D:\Projects\SDFBuilder\Dependencies\opencl-sdk\include" /I"D:\Projects\SDFBuilder\Dependencies\imgui-master" /I"D:\Projects\SDFBuilder\Dependencies\imgui-sfml-master" /ZI /JMC /nologo /W3 /WX- /diagnostics:column /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /permissive- /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc142.pdb" /external:env:EXTERNAL_INCLUDE /external:W3 /Gd /TP /analyze- /FC /errorReport:prompt Geometry.cpp SDFBuilder.cpp
+         Geometry.cpp
+     1>D:\Projects\SDFBuilder\Geometry.h(12,31): warning C4305: 'initializing': truncation from 'double' to 'const float'
+         cl_version.h: CL_TARGET_OPENCL_VERSION is not defined. Defaulting to 220 (OpenCL 2.2)
+     1>D:\Projects\SDFBuilder\Geometry.cpp(14,45): warning C4305: 'initializing': truncation from 'double' to 'const float'
+     1>D:\Projects\SDFBuilder\Geometry.cpp(17,47): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+     1>D:\Projects\SDFBuilder\Geometry.cpp(257,44): warning C4838: conversion from 'int' to 'size_t' requires a narrowing conversion
+     1>D:\Projects\SDFBuilder\Geometry.cpp(257,75): warning C4838: conversion from 'int' to 'size_t' requires a narrowing conversion
+     1>D:\Projects\SDFBuilder\Geometry.cpp(258,36): warning C4838: conversion from 'cl_int' to 'size_t' requires a narrowing conversion
+     1>D:\Projects\SDFBuilder\Geometry.cpp(258,46): warning C4838: conversion from 'cl_int' to 'size_t' requires a narrowing conversion
+     1>D:\Projects\SDFBuilder\Geometry.cpp(271,44): warning C4018: '<': signed/unsigned mismatch
+     1>D:\Projects\SDFBuilder\Geometry.cpp(346,45): warning C4838: conversion from 'int' to 'size_t' requires a narrowing conversion
+     1>D:\Projects\SDFBuilder\Geometry.cpp(346,77): warning C4838: conversion from 'int' to 'size_t' requires a narrowing conversion
+     1>D:\Projects\SDFBuilder\Geometry.cpp(347,36): warning C4838: conversion from 'cl_int' to 'size_t' requires a narrowing conversion
+     1>D:\Projects\SDFBuilder\Geometry.cpp(347,46): warning C4838: conversion from 'cl_int' to 'size_t' requires a narrowing conversion
          SDFBuilder.cpp
      1>D:\Projects\SDFBuilder\Shader.h(57,40): warning C4101: 'e': unreferenced local variable
          cl_version.h: CL_TARGET_OPENCL_VERSION is not defined. Defaulting to 220 (OpenCL 2.2)
      1>D:\Projects\SDFBuilder\geometry.h(12,31): warning C4305: 'initializing': truncation from 'double' to 'const float'
-     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(25,47): warning C4455: 'operator ""s': literal suffix identifiers that do not start with an underscore are reserved
-     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(56,41): warning C4305: 'initializing': truncation from 'double' to 'const float'
-     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(65,30): warning C4305: 'initializing': truncation from 'double' to 'const float'
-     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(205,27): warning C4838: conversion from 'cl_int' to 'size_t' requires a narrowing conversion
-     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(205,37): warning C4838: conversion from 'cl_int' to 'size_t' requires a narrowing conversion
-     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(256,44): warning C4018: '<': signed/unsigned mismatch
-     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(262,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(263,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(264,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(280,44): warning C4018: '<': signed/unsigned mismatch
+     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(26,47): warning C4455: 'operator ""s': literal suffix identifiers that do not start with an underscore are reserved
+     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(57,41): warning C4305: 'initializing': truncation from 'double' to 'const float'
+     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(66,30): warning C4305: 'initializing': truncation from 'double' to 'const float'
+     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(207,27): warning C4838: conversion from 'cl_int' to 'size_t' requires a narrowing conversion
+     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(207,37): warning C4838: conversion from 'cl_int' to 'size_t' requires a narrowing conversion
+     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(264,44): warning C4018: '<': signed/unsigned mismatch
+     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(270,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(271,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(272,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+     1>D:\Projects\SDFBuilder\SDFBuilder.cpp(288,44): warning C4018: '<': signed/unsigned mismatch
+         Generating Code...
        Done executing task "CL".
      1>Done building target "ClCompile" in project "SDFBuilder.vcxproj".
        Target "RunSelectedFileNativeCodeAnalysis" skipped, due to false condition; ('$(RunMsvcAnalysis)'=='true' and '$(SelectedFiles)'!='') was evaluated as ('false'=='true' and ''!='').
@@ -1432,11 +1449,11 @@ Logging verbosity is set to: Detailed.     1>Project "D:\Projects\SDFBuilder\SDF
          	Debug\SDFBuilder.tlog\link.write.1.tlog
          Read Tracking Logs:
          	Debug\SDFBuilder.tlog\link.read.1.tlog
-         Outputs for D:\PROJECTS\SDFBUILDER\DEBUG\GEOMETRY.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI-SFML.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_DEMO.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_DRAW.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_TABLES.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_WIDGETS.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\SDFBUILDER.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\UTILS.OBJ:
+         Outputs for D:\PROJECTS\SDFBUILDER\DEBUG\DRAGDROP.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\GEOMETRY.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI-SFML.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_DEMO.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_DRAW.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_TABLES.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_WIDGETS.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\SDFBUILDER.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\UTILS.OBJ:
          	D:\PROJECTS\SDFBUILDER\DEBUG\SDFBUILDER.EXE
          	D:\PROJECTS\SDFBUILDER\DEBUG\SDFBUILDER.ILK
          	D:\PROJECTS\SDFBUILDER\DEBUG\SDFBUILDER.PDB
-         Inputs for D:\PROJECTS\SDFBUILDER\DEBUG\GEOMETRY.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI-SFML.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_DEMO.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_DRAW.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_TABLES.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_WIDGETS.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\SDFBUILDER.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\UTILS.OBJ:
+         Inputs for D:\PROJECTS\SDFBUILDER\DEBUG\DRAGDROP.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\GEOMETRY.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI-SFML.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_DEMO.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_DRAW.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_TABLES.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_WIDGETS.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\SDFBUILDER.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\UTILS.OBJ:
          	D:\PROJECTS\SDFBUILDER\DEPENDENCIES\SFML-2.5.1\LIB\SFML-GRAPHICS.LIB
          	D:\PROJECTS\SDFBUILDER\DEPENDENCIES\SFML-2.5.1\LIB\SFML-WINDOW.LIB
          	D:\PROJECTS\SDFBUILDER\DEPENDENCIES\SFML-2.5.1\LIB\SFML-AUDIO.LIB
@@ -1473,6 +1490,7 @@ Logging verbosity is set to: Detailed.     1>Project "D:\Projects\SDFBuilder\SDF
          	D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_TABLES.OBJ
          	D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_WIDGETS.OBJ
          	D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI-SFML.OBJ
+         	D:\PROJECTS\SDFBUILDER\DEBUG\DRAGDROP.OBJ
          	D:\PROJECTS\SDFBUILDER\DEBUG\GEOMETRY.OBJ
          	D:\PROJECTS\SDFBUILDER\DEBUG\SDFBUILDER.OBJ
          	D:\PROJECTS\SDFBUILDER\DEBUG\UTILS.OBJ
@@ -1484,25 +1502,27 @@ Logging verbosity is set to: Detailed.     1>Project "D:\Projects\SDFBuilder\SDF
          	C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO\2019\COMMUNITY\VC\TOOLS\MSVC\14.29.30037\LIB\X86\MSVCPRTD.LIB
          	C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO\2019\COMMUNITY\VC\TOOLS\MSVC\14.29.30037\LIB\X86\VCRUNTIMED.LIB
          	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.19041.0\UCRT\X86\UCRTD.LIB
-         Source compilation required: input D:\PROJECTS\SDFBUILDER\DEBUG\SDFBUILDER.OBJ is newer than output D:\PROJECTS\SDFBUILDER\DEBUG\SDFBUILDER.PDB.
+         Source compilation required: input D:\PROJECTS\SDFBUILDER\DEBUG\GEOMETRY.OBJ is newer than output D:\PROJECTS\SDFBUILDER\DEBUG\SDFBUILDER.PDB.
          Environment Variables passed to tool:
-           VS_UNICODE_OUTPUT=2060
+           VS_UNICODE_OUTPUT=1040
          C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\bin\HostX86\x86\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Projects\SDFBuilder\Debug\SDFBuilder.exe" /INCREMENTAL /ILK:"Debug\SDFBuilder.ilk" /NOLOGO "D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\lib\sfml-graphics.lib" "D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\lib\sfml-window.lib" "D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\lib\sfml-audio.lib" "D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\lib\sfml-network.lib" "D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\lib\sfml-system.lib" opengl32.lib winmm.lib gdi32.lib ws2_32.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\flac.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\freetype.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\ogg.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\openal32.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\vorbis.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\vorbisenc.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\vorbisfile.lib "D:\Projects\SDFBuilder\Dependencies\glew-2.1.0\lib\Release\Win32\glew32s.lib" "D:\Projects\SDFBuilder\Dependencies\glew-2.1.0\lib\Release\Win32\glew32.lib" Comdlg32.lib "D:\Projects\SDFBuilder\Dependencies\opencl-sdk\lib\x86\OpenCL.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Projects\SDFBuilder\Debug\SDFBuilder.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Projects\SDFBuilder\Debug\SDFBuilder.lib" /MACHINE:X86 Debug\imgui.obj
          Debug\imgui_demo.obj
          Debug\imgui_draw.obj
          Debug\imgui_tables.obj
          Debug\imgui_widgets.obj
          "Debug\imgui-SFML.obj"
+         Debug\DragDrop.obj
          Debug\Geometry.obj
          Debug\SDFBuilder.obj
          Debug\Utils.obj
          Tracking command:
-         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Tracker.exe /a /d "C:\Program Files (x86)\MSBuild\15.0\FileTracker\FileTracker32.dll" /i D:\Projects\SDFBuilder\Debug\SDFBuilder.tlog /r "D:\PROJECTS\SDFBUILDER\DEBUG\GEOMETRY.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI-SFML.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_DEMO.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_DRAW.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_TABLES.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_WIDGETS.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\SDFBUILDER.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\UTILS.OBJ" /b MSBuildConsole_CancelEvent016b5bc177604788bac044f0c1517e4a  /c "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\bin\HostX86\x86\link.exe"  /ERRORREPORT:PROMPT /OUT:"D:\Projects\SDFBuilder\Debug\SDFBuilder.exe" /INCREMENTAL /ILK:"Debug\SDFBuilder.ilk" /NOLOGO "D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\lib\sfml-graphics.lib" "D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\lib\sfml-window.lib" "D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\lib\sfml-audio.lib" "D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\lib\sfml-network.lib" "D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\lib\sfml-system.lib" opengl32.lib winmm.lib gdi32.lib ws2_32.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\flac.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\freetype.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\ogg.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\openal32.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\vorbis.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\vorbisenc.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\vorbisfile.lib "D:\Projects\SDFBuilder\Dependencies\glew-2.1.0\lib\Release\Win32\glew32s.lib" "D:\Projects\SDFBuilder\Dependencies\glew-2.1.0\lib\Release\Win32\glew32.lib" Comdlg32.lib "D:\Projects\SDFBuilder\Dependencies\opencl-sdk\lib\x86\OpenCL.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Projects\SDFBuilder\Debug\SDFBuilder.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Projects\SDFBuilder\Debug\SDFBuilder.lib" /MACHINE:X86 Debug\imgui.obj
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Tracker.exe /a /d "C:\Program Files (x86)\MSBuild\15.0\FileTracker\FileTracker32.dll" /i D:\Projects\SDFBuilder\Debug\SDFBuilder.tlog /r "D:\PROJECTS\SDFBUILDER\DEBUG\DRAGDROP.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\GEOMETRY.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI-SFML.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_DEMO.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_DRAW.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_TABLES.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\IMGUI_WIDGETS.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\SDFBUILDER.OBJ|D:\PROJECTS\SDFBUILDER\DEBUG\UTILS.OBJ" /b MSBuildConsole_CancelEvent497291661f6346aca5818e115e92abbe  /c "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\bin\HostX86\x86\link.exe"  /ERRORREPORT:PROMPT /OUT:"D:\Projects\SDFBuilder\Debug\SDFBuilder.exe" /INCREMENTAL /ILK:"Debug\SDFBuilder.ilk" /NOLOGO "D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\lib\sfml-graphics.lib" "D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\lib\sfml-window.lib" "D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\lib\sfml-audio.lib" "D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\lib\sfml-network.lib" "D:\Projects\SDFBuilder\Dependencies\SFML-2.5.1\lib\sfml-system.lib" opengl32.lib winmm.lib gdi32.lib ws2_32.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\flac.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\freetype.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\ogg.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\openal32.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\vorbis.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\vorbisenc.lib D:\Projects\SDFBuilder\Dependencies\SFMLExtLibs_x86\vorbisfile.lib "D:\Projects\SDFBuilder\Dependencies\glew-2.1.0\lib\Release\Win32\glew32s.lib" "D:\Projects\SDFBuilder\Dependencies\glew-2.1.0\lib\Release\Win32\glew32.lib" Comdlg32.lib "D:\Projects\SDFBuilder\Dependencies\opencl-sdk\lib\x86\OpenCL.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Projects\SDFBuilder\Debug\SDFBuilder.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Projects\SDFBuilder\Debug\SDFBuilder.lib" /MACHINE:X86 Debug\imgui.obj
          Debug\imgui_demo.obj
          Debug\imgui_draw.obj
          Debug\imgui_tables.obj
          Debug\imgui_widgets.obj
          "Debug\imgui-SFML.obj"
+         Debug\DragDrop.obj
          Debug\Geometry.obj
          Debug\SDFBuilder.obj
          Debug\Utils.obj
@@ -1730,20 +1750,32 @@ Build succeeded.
 
        "D:\Projects\SDFBuilder\SDFBuilder.vcxproj" (Build target) (1) ->
        (ClCompile target) -> 
+         D:\Projects\SDFBuilder\Geometry.h(12,31): warning C4305: 'initializing': truncation from 'double' to 'const float'
+         D:\Projects\SDFBuilder\Geometry.cpp(14,45): warning C4305: 'initializing': truncation from 'double' to 'const float'
+         D:\Projects\SDFBuilder\Geometry.cpp(17,47): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+         D:\Projects\SDFBuilder\Geometry.cpp(257,44): warning C4838: conversion from 'int' to 'size_t' requires a narrowing conversion
+         D:\Projects\SDFBuilder\Geometry.cpp(257,75): warning C4838: conversion from 'int' to 'size_t' requires a narrowing conversion
+         D:\Projects\SDFBuilder\Geometry.cpp(258,36): warning C4838: conversion from 'cl_int' to 'size_t' requires a narrowing conversion
+         D:\Projects\SDFBuilder\Geometry.cpp(258,46): warning C4838: conversion from 'cl_int' to 'size_t' requires a narrowing conversion
+         D:\Projects\SDFBuilder\Geometry.cpp(271,44): warning C4018: '<': signed/unsigned mismatch
+         D:\Projects\SDFBuilder\Geometry.cpp(346,45): warning C4838: conversion from 'int' to 'size_t' requires a narrowing conversion
+         D:\Projects\SDFBuilder\Geometry.cpp(346,77): warning C4838: conversion from 'int' to 'size_t' requires a narrowing conversion
+         D:\Projects\SDFBuilder\Geometry.cpp(347,36): warning C4838: conversion from 'cl_int' to 'size_t' requires a narrowing conversion
+         D:\Projects\SDFBuilder\Geometry.cpp(347,46): warning C4838: conversion from 'cl_int' to 'size_t' requires a narrowing conversion
          D:\Projects\SDFBuilder\Shader.h(57,40): warning C4101: 'e': unreferenced local variable
          D:\Projects\SDFBuilder\geometry.h(12,31): warning C4305: 'initializing': truncation from 'double' to 'const float'
-         D:\Projects\SDFBuilder\SDFBuilder.cpp(25,47): warning C4455: 'operator ""s': literal suffix identifiers that do not start with an underscore are reserved
-         D:\Projects\SDFBuilder\SDFBuilder.cpp(56,41): warning C4305: 'initializing': truncation from 'double' to 'const float'
-         D:\Projects\SDFBuilder\SDFBuilder.cpp(65,30): warning C4305: 'initializing': truncation from 'double' to 'const float'
-         D:\Projects\SDFBuilder\SDFBuilder.cpp(205,27): warning C4838: conversion from 'cl_int' to 'size_t' requires a narrowing conversion
-         D:\Projects\SDFBuilder\SDFBuilder.cpp(205,37): warning C4838: conversion from 'cl_int' to 'size_t' requires a narrowing conversion
-         D:\Projects\SDFBuilder\SDFBuilder.cpp(256,44): warning C4018: '<': signed/unsigned mismatch
-         D:\Projects\SDFBuilder\SDFBuilder.cpp(262,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-         D:\Projects\SDFBuilder\SDFBuilder.cpp(263,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-         D:\Projects\SDFBuilder\SDFBuilder.cpp(264,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-         D:\Projects\SDFBuilder\SDFBuilder.cpp(280,44): warning C4018: '<': signed/unsigned mismatch
+         D:\Projects\SDFBuilder\SDFBuilder.cpp(26,47): warning C4455: 'operator ""s': literal suffix identifiers that do not start with an underscore are reserved
+         D:\Projects\SDFBuilder\SDFBuilder.cpp(57,41): warning C4305: 'initializing': truncation from 'double' to 'const float'
+         D:\Projects\SDFBuilder\SDFBuilder.cpp(66,30): warning C4305: 'initializing': truncation from 'double' to 'const float'
+         D:\Projects\SDFBuilder\SDFBuilder.cpp(207,27): warning C4838: conversion from 'cl_int' to 'size_t' requires a narrowing conversion
+         D:\Projects\SDFBuilder\SDFBuilder.cpp(207,37): warning C4838: conversion from 'cl_int' to 'size_t' requires a narrowing conversion
+         D:\Projects\SDFBuilder\SDFBuilder.cpp(264,44): warning C4018: '<': signed/unsigned mismatch
+         D:\Projects\SDFBuilder\SDFBuilder.cpp(270,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+         D:\Projects\SDFBuilder\SDFBuilder.cpp(271,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+         D:\Projects\SDFBuilder\SDFBuilder.cpp(272,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+         D:\Projects\SDFBuilder\SDFBuilder.cpp(288,44): warning C4018: '<': signed/unsigned mismatch
 
-    12 Warning(s)
+    24 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:08.30
+Time Elapsed 00:00:09.34

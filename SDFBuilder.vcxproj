@@ -149,12 +149,14 @@
     <ClCompile Include="Dependencies\imgui-master\imgui_tables.cpp" />
     <ClCompile Include="Dependencies\imgui-master\imgui_widgets.cpp" />
     <ClCompile Include="Dependencies\imgui-sfml-master\imgui-SFML.cpp" />
+    <ClCompile Include="DragDrop.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="SDFBuilder.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debugprint.h" />
+    <ClInclude Include="DragDrop.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="openfilename.hpp" />
     <ClInclude Include="Shader.h" />

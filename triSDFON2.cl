@@ -36,10 +36,10 @@ void triangle_sdf(__global float* Ax, __global float* Ay, __global float* Az,
     __global float* Bx, __global float* By, __global float* Bz,
     __global float* Cx, __global float* Cy, __global float* Cz,
     __global float* x, __global float* y, __global float* z
-    , __global float* thickness, __global float* field) {
+    , __global float* thickness, __global float* field, __global int * ds) {
 
     int id = get_global_id(0);
-    for (int i = 0; i < 512; i++) {
+    for (int i = 0; i < ds[0]; i++) {
         float fld = field[i];
         float nfld = sdTriangle((float3)(Ax[id], Ay[id], Az[id]), (float3)(Bx[id], By[id], Bz[id]), (float3)(Cx[id], Cy[id], Cz[id]), (float3)(x[i], y[i], z[i]), thickness[0]);
         if (nfld < field[i])

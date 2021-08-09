@@ -19,6 +19,7 @@
 #include <vector>
 #include <thread>
 #include <algorithm>
+#include "DragDrop.h"
 
 
 //using directives
@@ -73,6 +74,7 @@ int GROUPS;
 static int running = 1;
 constexpr float zoomSpeed = 1.0;
 constexpr float minCameraZoom = 2.0;
+static HWND handle;
 
 //opengl memory locations
 static GLuint _id_sdfTex;
@@ -100,7 +102,7 @@ void build_ui();
 void process_stl();
 void set_uniforms();
 void draw_vertices();
-
+void DragDropCallback(wchar_t* fileName);
 
 void mousedrag(int dX, int dY) {
 
@@ -220,6 +222,12 @@ void open_window() {
     window_local.setVerticalSyncEnabled(true);
     window_local.setActive(true);
     window = &window_local;
+
+    //static sf::RenderWindow window_local(handle,sf::ContextSettings(32));
+    //window_local.setVerticalSyncEnabled(true);
+    //window_local.setActive(true);
+    //window = &window_local;
+
 }
 
 void setup_glew() {
@@ -487,6 +495,8 @@ int event_loop() {
             }
         }
 
+        
+
     }
 
     if (dragging) {
@@ -659,8 +669,7 @@ int main() {
 
     Geometry::init_opencl();
 
-    worker = std::thread(process_stl);
-    worker.detach();
+   
     
     
 
@@ -672,6 +681,7 @@ int main() {
    // OpenCL_Test();
 
     
+   // DragDropCallback((wchar_t *)L".\\Knight.stl");
 
     while (running) {
     
@@ -694,12 +704,21 @@ int main() {
     return 0;
 }
 
+
+void DragDropCallback(wchar_t * fileName) {
+    inputFilename = std::wstring(fileName);
+    worker = std::thread(process_stl);
+    worker.detach();
+}
+
 //open a window without console
 int APIENTRY wWinMain(_In_     HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
     _In_     LPWSTR    lpCmdLine,
     _In_     int       nCmdShow)
 {
+    HWND handle;
+    DragDrop::init(hInstance, hPrevInstance,NULL,1,&handle,DragDropCallback);
     
 	return main();
 }

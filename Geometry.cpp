@@ -27,7 +27,8 @@ namespace Geometry {
     static float x[DATA_SIZE], y[DATA_SIZE], z[DATA_SIZE];
     static float thickness[1];
     static float field[DATA_SIZE];
-    static cl_mem bAx, bAy, bAz, bBx, bBy, bBz, bCx, bCy, bCz,bx,by,bz, bthickness, bfield;
+    static cl_mem bAx, bAy, bAz, bBx, bBy, bBz, bCx, bCy, bCz,bx,by,bz, bthickness, bfield,bds;
+    static int ds[1];
 
 
     static cl_command_queue cq;
@@ -133,7 +134,7 @@ namespace Geometry {
        bz = clCreateBuffer(context, CL_MEM_READ_ONLY, DATA_SIZE  * sizeof(float), NULL, &ret);
        bthickness = clCreateBuffer(context, CL_MEM_READ_ONLY, 1 * sizeof(float), NULL, &ret);
          bfield = clCreateBuffer(context, CL_MEM_READ_WRITE,DATA_SIZE * sizeof(float), NULL, &ret);
-         
+         bds = clCreateBuffer(context, CL_MEM_READ_ONLY, 1 * sizeof(int), NULL, &ret);
 
 
         std::string source;
@@ -182,6 +183,7 @@ namespace Geometry {
         clSetKernelArg(kernel, 11, sizeof(cl_mem), (void*)&bz);
         clSetKernelArg(kernel, 12, sizeof(cl_mem), (void*)&bthickness);
         clSetKernelArg(kernel, 13, sizeof(cl_mem), (void*)&bfield);
+        clSetKernelArg(kernel, 14, sizeof(cl_mem), (void*)&bds);
 
         cq = command_queue;
 
@@ -248,6 +250,7 @@ namespace Geometry {
             clEnqueueWriteBuffer(cq, bz, CL_TRUE, 0, 1 * sizeof(float), (void*)z, 0, NULL, NULL);
 
             clEnqueueWriteBuffer(cq, bthickness, CL_TRUE, 0, 1 * sizeof(float), (void*)thickness, 0, NULL, NULL);
+            clEnqueueWriteBuffer(cq, bds, CL_TRUE, 0, 1 * sizeof(int), (void*)ds, 0, NULL, NULL);
 
             cl_int ret;
             cl_int data_size = DATA_SIZE;
@@ -298,6 +301,7 @@ namespace Geometry {
             field[i] = 2048.0;
         }
         thickness[0] = tri_thickness;
+        ds[0] = DATA_SIZE;
         // CONSOLE_PRINTF_512("last chunk size %d\n", lastChunkSize);
 
         for (unsigned int cn = 0; cn < chunks.size(); cn++) {
@@ -335,6 +339,7 @@ namespace Geometry {
 
             clEnqueueWriteBuffer(cq, bthickness, CL_TRUE, 0, 1 * sizeof(float), (void*)thickness, 0, NULL, NULL);
             clEnqueueWriteBuffer(cq, bfield, CL_TRUE, 0, DATA_SIZE * sizeof(float), (void*)field, 0, NULL, NULL);
+            clEnqueueWriteBuffer(cq, bds, CL_TRUE, 0, 1 * sizeof(int), (void*)ds, 0, NULL, NULL);
 
             cl_int ret;
             cl_int data_size = DATA_SIZE;
