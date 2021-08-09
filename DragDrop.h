@@ -6,5 +6,6 @@ namespace DragDrop {
 		HINSTANCE hPrevInstance,
 		LPSTR cmdLine,
 		int cmdShow, HWND* handle, void(*callback)(wchar_t * fileName));
+	bool processEvents();
 }
 

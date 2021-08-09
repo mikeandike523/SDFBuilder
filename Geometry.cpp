@@ -12,7 +12,7 @@ using glm::mat3;
 namespace Geometry {
     
     constexpr float micro_step = 1.5 * 0.001;
-    constexpr int GLOBAL_LOCAL_RATIO = 16;
+    constexpr int GLOBAL_LOCAL_RATIO = 32;
     float dot2(glm::vec3 v) { return glm::dot(v, v); }
     constexpr float signf(float f) { return f >= 0.0 ? 1.0 : -1.0; }
     constexpr float minf(float a, float b) { return a < b ? a : b; };

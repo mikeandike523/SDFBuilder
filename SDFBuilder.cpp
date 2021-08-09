@@ -37,7 +37,7 @@ static int winW = 640;
 static int winH = 480;
 static sf::RenderWindow * window;
 static std::wstring inputFilename = L".\\Knight.stl";
-static int min_resolution = 32;
+static int min_resolution = 64;
 static float triangle_thickness = 0.05f;
 static vector<triangle> triangles;
 static std::vector<std::vector<triangle>> triangle_chunks;
@@ -75,6 +75,7 @@ static int running = 1;
 constexpr float zoomSpeed = 1.0;
 constexpr float minCameraZoom = 2.0;
 static HWND handle;
+constexpr float axes_scale = 1.2;
 
 //opengl memory locations
 static GLuint _id_sdfTex;
@@ -218,15 +219,19 @@ void OpenCL_Test() {
 }
 
 void open_window() {
-    static sf::RenderWindow window_local(sf::VideoMode(winW, winH), (const char *)"SDFBuilder", sf::Style::Default, sf::ContextSettings(32));
+ /*   static sf::RenderWindow window_local(sf::VideoMode(winW, winH), (const char *)"SDFBuilder", sf::Style::Default, sf::ContextSettings(32));
+    window_local.setVerticalSyncEnabled(true);
+    window_local.setActive(true);
+    window = &window_local;*/
+
+
+    CONSOLE_PRINTF_512("p_handle: 0x%p\n",&handle);
+
+    static sf::RenderWindow window_local(handle,sf::ContextSettings(32));
     window_local.setVerticalSyncEnabled(true);
     window_local.setActive(true);
     window = &window_local;
-
-    //static sf::RenderWindow window_local(handle,sf::ContextSettings(32));
-    //window_local.setVerticalSyncEnabled(true);
-    //window_local.setActive(true);
-    //window = &window_local;
+ //   DragDrop::activate();
 
 }
 
@@ -409,9 +414,9 @@ void process_stl() {
     CONSOLE_PRINTF_512("stl max y: %f\n", maxy);
     CONSOLE_PRINTF_512("stl max z: %f\n", maxz);
 
-    axisX = (maxx - minx) / minrange;
-    axisY = (maxy - miny) / minrange;
-    axisZ = (maxz - minz) / minrange;
+    axisX = axes_scale*(maxx - minx) / minrange;
+    axisY = axes_scale * (maxy - miny) / minrange;
+    axisZ = axes_scale * (maxz - minz) / minrange;
 
     for (unsigned long it = 0; it < triangles.size(); it++) {
         triangle tri = triangles[it];
@@ -450,6 +455,8 @@ void process_stl() {
 
 
 int event_loop() {
+
+    DragDrop::processEvents();
 
     static int dragging = 0; //dragging the mouse
     static sf::Vector2i old_mouse_position = sf::Vector2i(-1, -1);
@@ -717,9 +724,10 @@ int APIENTRY wWinMain(_In_     HINSTANCE hInstance,
     _In_     LPWSTR    lpCmdLine,
     _In_     int       nCmdShow)
 {
-    HWND handle;
+   
     DragDrop::init(hInstance, hPrevInstance,NULL,1,&handle,DragDropCallback);
-    
+   
 	return main();
+    return 0;
 }
 

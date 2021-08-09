@@ -10,7 +10,7 @@ using glm::mat3;
 namespace Geometry {
 
 	constexpr float pi = 3.141592;
-	constexpr int DATA_SIZE = 512;
+	constexpr int DATA_SIZE = 1024;
 
 	typedef struct triangle { vec3 A; vec3 B; vec3 C; triangle(vec3 a, vec3 b, vec3 c): A(a),B(b),C(c){}
 	

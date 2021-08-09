@@ -142,11 +142,6 @@ namespace DragDrop {
 		return isRunning;
 	}
 
-	void pe_func() {
-		while (processEvents())
-		{
-		}
-	}
 
 	int init(HINSTANCE hInstance,
 		HINSTANCE hPrevInstance,
@@ -154,20 +149,19 @@ namespace DragDrop {
 		int cmdShow, HWND* handle, void(*callback)(wchar_t* fileName))
 	{
 		cb = callback;
-		AllocConsole();
-		HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-		SetConsoleTitle(L"Minimal Drag and Drop Application for Windows: Output Console");
-		freopen("CONOUT$", "w", stdout);
-		freopen("CONOUT$", "w", stderr);
+		//AllocConsole();
+		//HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+		//SetConsoleTitle(L"Minimal Drag and Drop Application for Windows: Output Console");
+		//freopen("CONOUT$", "w", stdout);
+	//	freopen("CONOUT$", "w", stderr);
 
 		if (!createWindow(hInstance, 640, 480, 32))
 		{
-			system("PAUSE");
-			return 1;
+		//	system("PAUSE");
+			//return 1;
 		}
 
-		thread t(pe_func);
-		t.detach();
+		*handle = hwnd;
 		
 
 		return 0;
