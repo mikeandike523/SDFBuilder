@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <string>
 #include <Windows.h>
+#include <cmath>
 using glm::vec3;
 using Geometry::triangle;
 using glm::mat3;
@@ -14,6 +15,13 @@ using std::max;
 using std::min;
 namespace Geometry {
     
+    static float axisX, axisY, axisZ;
+    void set_axes(float _axisX,float _axisY,float _axisZ) {
+        axisX = _axisX;
+        axisY = _axisY;
+        axisZ = _axisZ;
+    }
+
 
     vec3 maxv(vec3 a, vec3 b) {
         return vec3(max(a.x, b.x), max(a.y, b.y), max(a.z, b.z));
@@ -42,8 +50,9 @@ namespace Geometry {
     static float x[DATA_SIZE], y[DATA_SIZE], z[DATA_SIZE];
     static float thickness[1];
     static float field[DATA_SIZE];
-    static cl_mem bAx, bAy, bAz, bBx, bBy, bBz, bCx, bCy, bCz,bx,by,bz, bthickness, bfield,bds;
+    static cl_mem bAx, bAy, bAz, bBx, bBy, bBz, bCx, bCy, bCz, bx, by, bz, bthickness, bfield, bds, baxes;
     static int ds[1];
+    static float axes[3];
 
 
     static cl_command_queue cq;
@@ -150,6 +159,7 @@ namespace Geometry {
        bthickness = clCreateBuffer(context, CL_MEM_READ_ONLY, 1 * sizeof(float), NULL, &ret);
          bfield = clCreateBuffer(context, CL_MEM_READ_WRITE,DATA_SIZE * sizeof(float), NULL, &ret);
          bds = clCreateBuffer(context, CL_MEM_READ_ONLY, 1 * sizeof(int), NULL, &ret);
+         baxes = clCreateBuffer(context, CL_MEM_READ_ONLY, 3 * sizeof(float), NULL, &ret);
 
 
         std::string source;
@@ -199,6 +209,7 @@ namespace Geometry {
         clSetKernelArg(kernel, 12, sizeof(cl_mem), (void*)&bthickness);
         clSetKernelArg(kernel, 13, sizeof(cl_mem), (void*)&bfield);
         clSetKernelArg(kernel, 14, sizeof(cl_mem), (void*)&bds);
+        clSetKernelArg(kernel, 15, sizeof(cl_mem), (void*)&baxes);
 
         cq = command_queue;
 
@@ -267,6 +278,7 @@ namespace Geometry {
             clEnqueueWriteBuffer(cq, bthickness, CL_TRUE, 0, 1 * sizeof(float), (void*)thickness, 0, NULL, NULL);
             clEnqueueWriteBuffer(cq, bds, CL_TRUE, 0, 1 * sizeof(int), (void*)ds, 0, NULL, NULL);
 
+            clEnqueueWriteBuffer(cq, baxes, CL_TRUE, 0, 3 * sizeof(float), (void*)axes, 0, NULL, NULL);
             cl_int ret;
             cl_int data_size = DATA_SIZE;
             size_t localws[3] = { data_size/GLOBAL_LOCAL_RATIO ,data_size / GLOBAL_LOCAL_RATIO,data_size / GLOBAL_LOCAL_RATIO };
@@ -316,6 +328,9 @@ namespace Geometry {
             field[i] = 2048.0;
             //field[i] = micro_step*2.0;
         }
+        axes[0] = axisX;
+        axes[1] = axisY;
+        axes[2] = axisZ;
         thickness[0] = tri_thickness;
         ds[0] = DATA_SIZE;
         // CONSOLE_PRINTF_512("last chunk size %d\n", lastChunkSize);
@@ -357,6 +372,8 @@ namespace Geometry {
             clEnqueueWriteBuffer(cq, bfield, CL_TRUE, 0, DATA_SIZE * sizeof(float), (void*)field, 0, NULL, NULL);
             clEnqueueWriteBuffer(cq, bds, CL_TRUE, 0, 1 * sizeof(int), (void*)ds, 0, NULL, NULL);
 
+            clEnqueueWriteBuffer(cq, baxes, CL_TRUE, 0,3 * sizeof(float), (void*)axes, 0, NULL, NULL);
+
             cl_int ret;
             cl_int data_size = DATA_SIZE;
             size_t localws[2] = { data_size / GLOBAL_LOCAL_RATIO ,data_size / GLOBAL_LOCAL_RATIO };
@@ -364,6 +381,16 @@ namespace Geometry {
 
             ret = clEnqueueNDRangeKernel(cq, kernel, 2, NULL, globalws, localws, 0, NULL, NULL);
             ret = clEnqueueReadBuffer(cq, bfield, CL_TRUE, 0, data_size * sizeof(float), (void*)field, 0, NULL, NULL);
+            
+            /*
+            for (unsigned int i = 0; i < DATA_SIZE; i++) {
+                if (field[i]==2048.0) {
+                    field[i] = 0.0;
+                }
+            }
+            */
+            
+
 
 
         }

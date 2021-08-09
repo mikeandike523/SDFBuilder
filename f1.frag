@@ -72,7 +72,7 @@ float light(vec3 position, vec3 n){
 
 
 vec3 material(vec3 position, vec3 n){
-	return light(position,n)*(-n.yyy);
+	return (n.yyy);
 	//return light(position,n)*vec3(1.0);
 }
 

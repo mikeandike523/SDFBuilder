@@ -409,6 +409,8 @@ void process_stl() {
     axisY = axes_scale * (maxy - miny) / minrange;
     axisZ = axes_scale * (maxz - minz) / minrange;
 
+    Geometry::set_axes(axisX, axisY, axisZ);
+
     unsigned int num_items = resx * resy * resz; //rgb data where r=g=b=sdf value
     unsigned int num_data_items = num_items * 3;
     GROUPS = num_items / group_amt + 1;

@@ -28,7 +28,7 @@ namespace Geometry {
 
 	void init_opencl();
 	void quit_opencl();
-
+	void set_axes(float _axisX, float _axisY, float _axisZ);
 
 	std::vector<std::vector<triangle>> chunk_triangles(std::vector<triangle>& triangles, int* last_chunk_size);
 
