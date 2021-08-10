@@ -10,8 +10,9 @@ using glm::mat3;
 namespace Geometry {
 
 	constexpr float pi = 3.141592;
-	constexpr int DATA_SIZE =256;
+	constexpr int DATA_SIZE =512;
 	constexpr int GLOBAL_LOCAL_RATIO =16;
+
 
 	float sdBox(vec3 p, vec3 b);
 
@@ -45,7 +46,10 @@ namespace Geometry {
 		glm::ivec3 get_octant(float x, float y, float z);
 		std::vector<Geometry::triangle> & get_brute();
 		int get_index(int ix, int iy, int iz);
-		float sdf(float x, float y, float z);
+		float sdf(float x, float y, float z, float thick);
+		float gResX();
+		float gResY();
+		float gResZ();
 	}
 	
 }

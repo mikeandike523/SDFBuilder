@@ -8,11 +8,12 @@
 #include <Windows.h>
 #include <cmath>
 #include "tribox.h"
+
 using glm::vec3;
 using Geometry::triangle;
 using glm::mat3;
 using glm::length;
-using std::max;
+
 using std::min;
 using glm::ivec3;
 namespace Geometry {
@@ -248,7 +249,14 @@ namespace Geometry {
         return mat3(1.0,0.0,0.0,0.0,sin(angle+pi/2.0),cos(angle+pi/2.0),0.0,sin(angle),cos(angle));
     }
     float * get_fields(std::vector<std::vector<triangle>>& chunks, int lastChunkSize, std::vector<vec3>& positions, float tri_thickness) {
-    
+
+        //float cutd = Utils::max3f(
+       //     octree::gResX(),
+       //     octree::gResY(),
+        //    octree::gResZ()
+         //   );
+
+      
         for (int i = 0; i < DATA_SIZE; i++) {
             x[i] = positions[i].x;
             y[i] = positions[i].y;
@@ -264,7 +272,8 @@ namespace Geometry {
         thickness[0] = tri_thickness;
         ds[0] = DATA_SIZE;
         // CONSOLE_PRINTF_512("last chunk size %d\n", lastChunkSize);
-
+      
+        /*
         for (unsigned int cn = 0; cn < chunks.size(); cn++) {
             std::vector<triangle>& chunk = chunks[cn];
 
@@ -312,45 +321,45 @@ namespace Geometry {
             ret = clEnqueueNDRangeKernel(cq, kernel, 2, NULL, globalws, localws, 0, NULL, NULL);
             ret = clEnqueueReadBuffer(cq, bfield, CL_TRUE, 0, data_size * sizeof(float), (void*)field, 0, NULL, NULL);
 
-            for (unsigned int i = 0; i < DATA_SIZE; i++) {
-                if (field[i]==2048.0) {
-            
-                   
-                    glm::ivec3 octant = octree::get_octant(x[i], y[i], z[i]);
-
-
-                    std::vector<Geometry::triangle>& sector = octree::query_sector(octant.x,octant.y,octant.z);
-                    if (sector.size() == 0) {
-                        field[i] = octree::sdf(x[i],y[i],z[i]); 
-                    }
-                    else {
-
-
-                      
-                        for (int it = 0; it < sector.size(); it++) {
-                            triangle tri = sector[it];
-                            float sdf = triangle_sdf(tri, 
-                                vec3(x[i], y[i], z[i]), 
-                                thickness[0]);
-
-                            if (sdf < field[i])
-                                field[i] = sdf;
-
-                        }
-                    }
-                    
-                }
-            }
-            
-            
+      
 
 
 
         }
     
+        */
+        
+        for (unsigned int i = 0; i < DATA_SIZE; i++) {
+            if (field[i] == 2048.0) {
+
+
+              //  glm::ivec3 octant = octree::get_octant(x[i], y[i], z[i]);
+
+
+           //     std::vector<Geometry::triangle>& sector = //octree::query_sector(octant.x, octant.y, octant.z);
+               // if (sector.size() == 0) {
+                    field[i] = octree::sdf(x[i], y[i], z[i], thickness[0]);
+               // }
+             //   else {
 
 
 
+                 //   for (int it = 0; it < sector.size(); it++) {
+                   //     triangle tri = sector[it];
+                 //      float sdf = triangle_sdf(tri,
+                   //         vec3(x[i], y[i], z[i]),
+                  //          thickness[0]);
+
+                  //      if (sdf < field[i])
+                   //         field[i] = sdf;
+
+                  //  }
+              //  }
+
+            }
+        }
+
+        
     
         return field;
     }
@@ -387,6 +396,7 @@ namespace Geometry {
                 axisY / (float)octaY,
                 axisZ / (float)octaZ
             );
+            
 
          //   CONSOLE_PRINTF_512("octa: %d %d %d\n",octaX,octaY,octaZ);
         
@@ -445,13 +455,13 @@ namespace Geometry {
             return vec3(
                 -axisX+(float)ix/(float)octaX*2.0f*axisX+octant_half.x,
                 -axisY + (float)iy / (float)octaY * 2.0f * axisY + octant_half.y,
-                -axisZ + (float)iz / (float)octaZ * 2.0f * axisX + octant_half.z
+                -axisZ + (float)iz / (float)octaZ * 2.0f * axisZ + octant_half.z
             );
         }
 
         int intersects_octant(Geometry::triangle& tri, int ix, int iy, int iz) {
             vec3 bc = get_octant_center(ix,iy,iz);
-            vec3 bh = octant_half;
+            vec3 bh =octant_half;
 
             if (tribox::pointInsideBox(tri.A, bc, bh) ||
                 tribox::pointInsideBox(tri.B, bc, bh) ||
@@ -474,7 +484,7 @@ namespace Geometry {
             
             
             for (unsigned int i = 0; i < triangles.size(); i++) {
-                CONSOLE_PRINTF_512("%d of %d tris\n",i,triangles.size());
+           
                 triangle tri = triangles[i];
                 for (int ix = 0; ix < octaX; ix++) {
                     
@@ -492,6 +502,8 @@ namespace Geometry {
                 
                 }
                 
+                CONSOLE_PRINTF_512("%d of %d tris complete\n", i + 1, triangles.size());
+
             }
 
 
@@ -522,7 +534,7 @@ namespace Geometry {
         std::vector<Geometry::triangle> & get_brute() {
             return brute;
         }
-
+/*
         float sector_sdf( glm::ivec3 octant,vec3 pos) {
             float d = 2048.0;
             std::vector<Geometry::triangle> sector = odata[get_index(octant.x,octant.y,octant.z)];
@@ -538,13 +550,42 @@ namespace Geometry {
             }
             return d;
         }
+        */
+        float sdf(float x, float y, float z, float thick) {
 
-        float sdf(float x, float y, float z) {
+          //  glm::ivec3 octant = octree::get_octant(x, y, z);
+         
+           
+            float d = 2048.0;
+            for (int dx = 0; dx < octaX; dx++) {
+                for (int dy = 0; dy < octaY; dy++) {
+                    for (int dz =0; dz < octaZ; dz++) {
+                       // ivec3 ncoords = neighbor(octant, ivec3(dx, dy, dz));
+                        ivec3 ncoords = ivec3(dx,dy,dz);
+                        std::vector<Geometry::triangle>& sector = odata[get_index(ncoords.x,ncoords.y,ncoords.z)];
+                        for (unsigned int it = 0; it < sector.size(); it++)     {
+                        
+                            float dn = triangle_sdf(sector.at(it),vec3(x,y,z),thick);
 
-            glm::ivec3 octant = octree::get_octant(x, y, z);
-            return 0.0f; //todo:: fill this
+                            if (dn < d)
+                                d = dn;
+                        
+                        }
+                     
+                    }
+
+                 
+
+                }
+            }
+
+            return d;
         }
 
+
+        float gResX() { return resX; };
+        float gResY() { return resY; };
+        float gResZ() { return resZ; };
     }
 
 }

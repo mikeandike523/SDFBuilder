@@ -65,6 +65,12 @@ namespace Utils {
         return glm::vec3(A.x * B.x, A.y * B.y, A.z * B.z);
     }
 
+    int max2i(int a, int b) { return a > b ? a : b; }
+    int max3i(int a, int b, int c) { return max2i(a, max2i(b, c)); }
+
+    float max2f(float a, float b) { return a > b ? a : b; }
+    float max3f(float a, float b, float c) { return max2f(a, max2f(b, c)); }
+
 
 
 }

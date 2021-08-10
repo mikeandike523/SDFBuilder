@@ -19,6 +19,10 @@ namespace Utils{
     glm::vec3 swapYZ(glm::vec3& toSwap);
     glm::vec3 vec3MulElem(glm::vec3& A, glm::vec3& B);
     int StringToWString(std::wstring& ws, const std::string& s);
+    int max2i(int a, int b);
+    int max3i(int a, int b, int c);
+    float max2f(float a, float b);
+    float max3f(float a, float b, float c);
     
 
 }

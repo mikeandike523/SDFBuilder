@@ -37,7 +37,7 @@ static int winW = 640;
 static int winH = 480;
 static sf::RenderWindow * window;
 static std::wstring inputFilename = L".\\Knight.stl";
-static int min_resolution = 48;
+static int min_resolution = 64;
 static float triangle_thickness = 0.05f;
 static vector<triangle> triangles;
 static std::vector<std::vector<triangle>> triangle_chunks;
@@ -77,7 +77,7 @@ constexpr float minCameraZoom = 2.0;
 static HWND handle;
 constexpr float axes_scale = 1.2;
 constexpr float ozylim = pi / 2.0 * 0.8;
-constexpr float SCALE_DOWN = 8; //octree
+constexpr float SCALE_DOWN = 32; //octree
 
 //opengl memory locations
 static GLuint _id_sdfTex;
