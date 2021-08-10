@@ -553,15 +553,23 @@ namespace Geometry {
         */
         float sdf(float x, float y, float z, float thick) {
 
-          //  glm::ivec3 octant = octree::get_octant(x, y, z);
+            float d = 2048.0;
+/*
+            glm::ivec3 octant = octree::get_octant(x, y, z);
+            
          
            
             float d = 2048.0;
-            for (int dx = 0; dx < octaX; dx++) {
-                for (int dy = 0; dy < octaY; dy++) {
-                    for (int dz =0; dz < octaZ; dz++) {
-                       // ivec3 ncoords = neighbor(octant, ivec3(dx, dy, dz));
-                        ivec3 ncoords = ivec3(dx,dy,dz);
+          //  int maxdR = Utils::max3i(octaX/2, octaY / 2, octaZ / 2);
+            int dR = 2;
+       
+
+
+            for (int dx = -dR; dx <= dR; dx++) {
+                for (int dy = -dR; dy <= dR; dy++) {
+                    for (int dz =-dR; dz <=dR; dz++) {
+                        ivec3 ncoords = neighbor(octant, ivec3(dx, dy, dz));
+                     
                         std::vector<Geometry::triangle>& sector = odata[get_index(ncoords.x,ncoords.y,ncoords.z)];
                         for (unsigned int it = 0; it < sector.size(); it++)     {
                         
@@ -578,7 +586,32 @@ namespace Geometry {
 
                 }
             }
+            */
 
+            std::vector<Geometry::triangle>& sector = brute;
+            vec3 p(x, y, z);
+            
+            for (unsigned int it = 0; it < sector.size(); it++) {
+                Geometry::triangle tri = sector.at(it);
+                vec3 centroid = (tri.A + tri.B + tri.C) / 3.0f;
+                float leg1 = glm::length(tri.A - centroid);
+                float leg2 = glm::length(tri.B - centroid);
+                float leg3 = glm::length(tri.C - centroid);
+
+                float radius = Utils::max3f(leg1, leg2, leg3);
+
+                float dcheck = glm::length(centroid - p);
+
+                if (dcheck>d+radius)
+                    continue;
+
+
+
+                float dn = triangle_sdf(tri, vec3(x, y, z), thick);
+                if (dn < d)
+                    d = dn;
+
+            }
             return d;
         }
 

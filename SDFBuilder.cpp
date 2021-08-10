@@ -77,7 +77,7 @@ constexpr float minCameraZoom = 2.0;
 static HWND handle;
 constexpr float axes_scale = 1.2;
 constexpr float ozylim = pi / 2.0 * 0.8;
-constexpr float SCALE_DOWN = 32; //octree
+constexpr float SCALE_DOWN = 4; //octree
 
 //opengl memory locations
 static GLuint _id_sdfTex;
