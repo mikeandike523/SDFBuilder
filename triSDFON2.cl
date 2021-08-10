@@ -1,9 +1,9 @@
-const float cut_s = 10.0;
+const float cut_s = 1.0;
 
 float dot2(float3 v) { return v.x * v.x + v.y * v.y + v.z * v.z; }
-const float signf(float f) { return f >= 0.0 ? 1.0 : -1.0; }
-const float minf(float a, float b) { return a < b ? a : b; };
-const float maxf(float a, float b) { return a < b ? b : a; };
+float signf(float f) { return f >= 0.0 ? 1.0 : -1.0; }
+ float minf(float a, float b) { return a < b ? a : b; };
+ float maxf(float a, float b) { return a < b ? b : a; };
 
 float clampf(float f, float low, float high) {
     return minf(maxf(f, low), high);
@@ -57,15 +57,16 @@ void triangle_sdf(__global float* Ax, __global float* Ay, __global float* Az,
     float3 pA = (float3)(Ax[id], Ay[id], Az[id]);
     float3 pB = (float3)(Bx[id], By[id], Bz[id]);
     float3 pC = (float3)(Cx[id], Cy[id], Cz[id]);
- //   float3 cent = (pA + pB + pC) / (float3)(3.0);
-   //float cut = max3(length(pA-cent),length(pB-cent),length(pC-cent))*cut_s;
+    float3 cent = (pA + pB + pC) / (float3)(3.0);
+   float cut = max3(length(pA-cent),length(pB-cent),length(pC-cent))*cut_s;
 
 
     for (int i = 0; i < ds[0]; i++) {
         float3 pxyz = (float3)(x[i], y[i], z[i]);
-      //  float d = length(pxyz - cent);
-    //    if (d > cut) {continue; };
+        float d = length(pxyz - cent)-cut-thickness[0];
+       
         float fld = field[i];
+        if (d > fld) { continue; };
         float nfld = sdTriangle(pA,pB,pC, pxyz, thickness[0]);
         if (nfld < field[i])
             field[i] = nfld;
