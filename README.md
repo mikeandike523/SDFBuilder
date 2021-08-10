@@ -14,9 +14,9 @@
 
 ### Examples
 
-| ![](ReadmeFiles\screenshot_knight.png) |
+| ![](https://github.com/mikeandike523/SDFBuilder/blob/main/ReadmeFiles/screenshot_knight.png?raw=true) |
 | :----------------------------------------------------------: |
-| ![](ReadmeFiles\screenshot_helios.png) |
+|            ![](https://github.com/mikeandike523/SDFBuilder/blob/main/ReadmeFiles/screenshot_helios.png?raw=true)            |
 
 ### Usage
 
