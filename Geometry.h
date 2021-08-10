@@ -12,6 +12,7 @@ namespace Geometry {
 	constexpr float pi = 3.141592;
 	constexpr int DATA_SIZE =1024;
 	constexpr int GLOBAL_LOCAL_RATIO =64;
+	constexpr int pool_max = 8;
 
 
 	float sdBox(vec3 p, vec3 b);
@@ -33,10 +34,14 @@ namespace Geometry {
 
 	std::vector<std::vector<triangle>> chunk_triangles(std::vector<triangle>& triangles, int* last_chunk_size);
 
-	float * get_fields(std::vector<std::vector<triangle>>& chunks, int lastChunkSize, std::vector<vec3> & positions, float tri_thickness);
+	float * get_fields(std::vector<std::vector<triangle>>& chunks, int lastChunkSize, std::vector<vec3>  positions, float tri_thickness);
 
 	mat3 rotXZMat3(float angle);
 	mat3 rotZYMat3(float angle);
+
+	void get_fields_cpu(std::vector<vec3> positions, float tri_thickness,int pool, unsigned int start, unsigned int end, float * texD,unsigned int * scp, float * pp, unsigned int gas, unsigned int ndi, int * nup);
+
+	int get_pool_amt();
 
 	namespace octree {
 		
@@ -51,6 +56,7 @@ namespace Geometry {
 		float gResY();
 		float gResZ();
 	}
+
 	
 }
 

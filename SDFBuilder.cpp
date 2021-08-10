@@ -20,6 +20,7 @@
 #include <thread>
 #include <algorithm>
 #include "DragDrop.h"
+#include <cstring>
 
 
 //using directives
@@ -78,6 +79,8 @@ static HWND handle;
 constexpr float axes_scale = 1.2;
 constexpr float ozylim = pi / 2.0 * 0.8;
 constexpr float SCALE_DOWN = 4; //octree
+constexpr int DO_POOL = 1;
+constexpr float FDEF = 0.0f;
 
 //opengl memory locations
 static GLuint _id_sdfTex;
@@ -292,24 +295,29 @@ void calc_field(int group) {
         positions.push_back(vec3(0.0));
     }
 
-    float * field = Geometry::get_fields(triangle_chunks, lastChunkSize, positions, triangle_thickness);
+    float* field;
 
 
-    //   CONSOLE_PRINTF_512("%d | %d\n", index*3, texData.size());
-    for (unsigned int ii = group_start; ii < group_end; ii++) {
-      //  CONSOLE_PRINTF_512("field[%d] = %f\n", ii - group_start, field[ii - group_start]);
-        texData[ii * 3 + 0] = field[ii-group_start];
-        texData[ii * 3 + 1] = field[ii - group_start];
-        texData[ii * 3 + 2] = field[ii - group_start];
+    if (Geometry::get_pool_amt()>=Geometry::pool_max){
+        field = Geometry::get_fields(triangle_chunks, lastChunkSize, positions, triangle_thickness);
+        //   CONSOLE_PRINTF_512("%d | %d\n", index*3, texData.size());
+        for (unsigned int ii = group_start; ii < group_end; ii++) {
+            //  CONSOLE_PRINTF_512("field[%d] = %f\n", ii - group_start, field[ii - group_start]);
+            texData[ii * 3 + 0] = field[ii - group_start];
+            texData[ii * 3 + 1] = field[ii - group_start];
+            texData[ii * 3 + 2] = field[ii - group_start];
+        }
+
+        sample_count += group_amt_s;
+        progress = (float)(sample_count * 3) / (float)num_data_items;
     }
-    // texData.push_back(field);
-     //texData.push_back(field);
-     //texData.push_back(field);
+    else {
+        Geometry::get_fields_cpu(positions, triangle_thickness, DO_POOL,group_start,group_end,texData.data(),&sample_count,&progress,group_amt_s,num_data_items,&sdf_needs_update);
+    }
 
-    //CONSOLE_PRINTF_512("\r%2.2f                                                                    ",(float)texData.size()/(float)num_data_items*100.0f);
-    
-    sample_count += group_amt_s;
-    progress = (float)(sample_count * 3) / (float)num_data_items;
+
+
+
 
 }
 
@@ -441,7 +449,7 @@ void process_stl() {
         float y = -axisY + ((float)iy / (float)resy) * 2.0 * axisY;
         float z = -axisZ + ((float)iz / (float)resz) * 2.0 * axisZ;
       //  float fdef = std::max(Geometry::sdBox(vec3(x, y, z), vec3(axisX, axisY, axisZ)),-Geometry::sdBox(vec3(x, y, z), vec3(axisX / 2.0, axisY / 2.0, axisZ / 2.0)));
-        float fdef = 0.0;
+        float fdef = FDEF;
         
         texData.push_back(fdef);
         texData.push_back(fdef);
@@ -483,6 +491,10 @@ void process_stl() {
         calc_field(i);
         sdf_needs_update = 1;
     }
+    
+    CONSOLE_PRINTF_512("waiting on threads.\n");
+    while (Geometry::get_pool_amt() > 0) { }
+    CONSOLE_PRINTF_512("done.\n");
 
     worker_running = 0;
 }

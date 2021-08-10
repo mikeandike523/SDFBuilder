@@ -8,6 +8,8 @@
 #include <Windows.h>
 #include <cmath>
 #include "tribox.h"
+#include <thread>
+//#include <functional>
 
 using glm::vec3;
 using Geometry::triangle;
@@ -248,7 +250,7 @@ namespace Geometry {
     mat3 rotZYMat3(float angle) {
         return mat3(1.0,0.0,0.0,0.0,sin(angle+pi/2.0),cos(angle+pi/2.0),0.0,sin(angle),cos(angle));
     }
-    float * get_fields(std::vector<std::vector<triangle>>& chunks, int lastChunkSize, std::vector<vec3>& positions, float tri_thickness) {
+    float * get_fields(std::vector<std::vector<triangle>>& chunks, int lastChunkSize, std::vector<vec3> positions, float tri_thickness) {
 
         //float cutd = Utils::max3f(
        //     octree::gResX(),
@@ -344,6 +346,50 @@ namespace Geometry {
         
     
         return field;
+    }
+
+    
+    static int pool_size = 0;
+    int get_pool_amt() { return pool_size; }
+    void get_fields_cpu_proc(std::vector<vec3> positions, float tri_thickness, int pool, unsigned int start, unsigned int end, float* texD, unsigned int* scp, float* pp, unsigned int gas, unsigned int ndi, int * nup) {
+
+        float fieldcpu[DATA_SIZE];
+
+        for (unsigned int i = 0; i < DATA_SIZE; i++) {
+
+            fieldcpu[i] = octree::sdf(positions[i].x, positions[i].y, positions[i].z, tri_thickness);
+
+        }
+
+        for (unsigned int ii = start; ii < end; ii++) {
+            //  CONSOLE_PRINTF_512("field[%d] = %f\n", ii - group_start, field[ii - group_start]);
+            texD[ii * 3 + 0] = fieldcpu[ii - start];
+            texD[ii * 3 + 1] = fieldcpu[ii - start];
+            texD[ii * 3 + 2] = fieldcpu[ii - start];
+        }
+
+        *scp = *scp + gas;
+        *pp = (float)(*scp * 3) / (float)ndi;
+       
+        if (pool) {
+            pool_size--;
+        }
+
+        *nup = 1;
+    
+    }
+
+    void get_fields_cpu(std::vector<vec3> positions, float tri_thickness, int pool, unsigned int start, unsigned int end, float* texD, unsigned int* scp, float* pp, unsigned int gas, unsigned int ndi, int * nup) {
+        if (!pool) {
+            get_fields_cpu_proc( positions, tri_thickness, pool,start,end,texD,scp,pp,gas,ndi,nup);
+        }
+        else {
+          //  if (pool_size >= pool_max)CONSOLE_PRINTF_512("Waiting for threads...\n");
+           // while (pool_size >= pool_max) {}
+            pool_size++;
+            std::thread fthread(get_fields_cpu_proc,positions, tri_thickness, pool,start,end,texD,scp,pp,gas,ndi,nup);
+                fthread.detach();
+        }
     }
 
     namespace octree {

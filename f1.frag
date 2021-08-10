@@ -12,19 +12,27 @@ const float max_distance = 2048.0;
 const float sdf_epsilon = 0.001;
 const float normal_epsilon = 0.006;
 const int max_steps = 512;
-const float s_bias = 0.010;
+const float s_bias = 0.005;
 const float s_strength = 0.005;
 uniform mat3 matRotXZ;
 uniform mat3 matRotZY;
 uniform float zoom;
 uniform float axs;
 const float pi=3.141592;
+const float smoothfactor = 0.005;
+const float move_disc_up=0.005;
 
 //three point lighting
 const int nl=32;
 
 //funcdefs
 float march(vec3 origin, vec3 ray);
+
+float smin(float a, float b, float k) {
+  float h = clamp(0.5 + 0.5*(a-b)/k, 0.0, 1.0);
+  return mix(a, b, h) - k*h*(1.0-h);
+}
+
 
 float get_sdf(vec3 p){
 	vec3 texCoord = vec3((p.z+axisZ)/(2.0*axisZ),(p.y+axisY)/(2.0*axisY),(p.x+axisX)/(2.0*axisX));
@@ -47,7 +55,7 @@ float sdCappedCylinder( vec3 p, float h, float r )
 float primary_sdf(vec3 position){
 	float s = get_sdf(position);
 	float disc_h = 0.1;
-	return min(max(s,sdBox(position,vec3(axisX,axisY,axisZ))),sdCappedCylinder(position-(vec3(0.0,-axisY/axs,0.0)-vec3(0.0,disc_h/2.0,0.0)),2.0*max(axisX,axisZ),0.1));
+	return smin(max(s,sdBox(position,vec3(axisX,axisY,axisZ))),sdCappedCylinder(position-(vec3(0.0,-axisY/axs+move_disc_up,0.0)-vec3(0.0,disc_h/2.0,0.0)),2.0*max(axisX,axisZ),0.1),smoothfactor);
 
 }
 
