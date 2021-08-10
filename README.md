@@ -14,9 +14,9 @@
 
 ### Examples
 
-| ![](D:\Projects\SDFBuilder\ReadmeFiles\screenshot_knight.png) |
+| ![](ReadmeFiles\screenshot_knight.png) |
 | :----------------------------------------------------------: |
-| ![](D:\Projects\SDFBuilder\ReadmeFiles\screenshot_helios.png) |
+| ![](ReadmeFiles\screenshot_helios.png) |
 
 ### Usage
 
@@ -49,6 +49,6 @@ This project is in a prelease state, and is not yet available as a standalone ap
 
 - Use the live visualization to track conversion progress
 
-- Locate the output SDF file in the STL source folder (e.g. `desktop/Knight.stl`→`desktop.Knigh,sdf`)
+- Locate the output SDF file in the STL source folder (e.g. `desktop/Knight.stl`→`desktop.Knight.sdf`)
 
   
