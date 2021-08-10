@@ -10,8 +10,8 @@ using glm::mat3;
 namespace Geometry {
 
 	constexpr float pi = 3.141592;
-	constexpr int DATA_SIZE = 512;
-	constexpr int GLOBAL_LOCAL_RATIO = 16;
+	constexpr int DATA_SIZE =256;
+	constexpr int GLOBAL_LOCAL_RATIO =16;
 
 	float sdBox(vec3 p, vec3 b);
 
@@ -32,7 +32,6 @@ namespace Geometry {
 
 	std::vector<std::vector<triangle>> chunk_triangles(std::vector<triangle>& triangles, int* last_chunk_size);
 
-	float get_field(std::vector<std::vector<triangle>> & chunks, int lastChunkSize, vec3 position, float tri_thickness);
 	float * get_fields(std::vector<std::vector<triangle>>& chunks, int lastChunkSize, std::vector<vec3> & positions, float tri_thickness);
 
 	mat3 rotXZMat3(float angle);

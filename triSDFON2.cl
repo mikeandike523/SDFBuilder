@@ -11,6 +11,13 @@ float max3(float a, float b, float c) {
     return maxf(a, maxf(b, c));
 }
 
+float min3(float a, float b, float c) {
+    return minf(a, minf(b, c));
+}
+
+float median3(float a, float b, float c) {
+    max(min(a, b), min(max(a, b), c));
+}
 float sdTriangle(float3 v1, float3 v2, float3 v3, float3 p, float tri_thickness)
 {
     // prepare data    
@@ -48,15 +55,15 @@ void triangle_sdf(__global float* Ax, __global float* Ay, __global float* Az,
     float3 pA = (float3)(Ax[id], Ay[id], Az[id]);
     float3 pB = (float3)(Bx[id], By[id], Bz[id]);
     float3 pC = (float3)(Cx[id], Cy[id], Cz[id]);
-   // float3 cent = (pA + pB + pC) / (float3)(3.0);
+    float3 cent = (pA + pB + pC) / (float3)(3.0);
     //float cut = max3(length(pA-cent),length(pB-cent),length(pC-cent))*cut_s;
-
+    float cut = median3(axes[0],axes[1],axes[2]);
 
 
     for (int i = 0; i < ds[0]; i++) {
         float3 pxyz = (float3)(x[i], y[i], z[i]);
-       // float d = length(pxyz - cent);
-      //  if (d > cut) { continue; };
+        float d = length(pxyz - cent);
+        if (d > cut) { continue; };
         float fld = field[i];
         float nfld = sdTriangle(pA,pB,pC, pxyz, thickness[0]);
         if (nfld < field[i])

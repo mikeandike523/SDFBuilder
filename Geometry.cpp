@@ -237,79 +237,7 @@ namespace Geometry {
         return chunks;
     }
 
-    float get_field(std::vector<std::vector<triangle>> & chunks, int lastChunkSize, vec3 position, float tri_thickness) {
-        float d = 2048.0;
-       // CONSOLE_PRINTF_512("last chunk size %d\n", lastChunkSize);
-
-        for (unsigned int cn = 0; cn < chunks.size(); cn++) {
-            std::vector<triangle> & chunk = chunks[cn];
-            x[0] = position.x; y[0] = position.y; z[0] = position.z;
-            thickness[0] = tri_thickness;
-            for (unsigned int it = 0; it < chunk.size(); it++) {
-                triangle tri = chunk[it];
-               
-                Ax[it] = tri.A.x;
-                Ay[it] = tri.A.y;
-                Az[it] = tri.A.z;
-
-                Bx[it] = tri.B.x;
-                By[it] = tri.B.y;
-                Bz[it] = tri.B.z;
-
-                Cx[it] = tri.C.x;
-                Cy[it] = tri.C.y;
-                Cz[it] = tri.C.z;
-            }
-
-            clEnqueueWriteBuffer(cq, bAx, CL_TRUE, 0, DATA_SIZE * sizeof(float), (void*)Ax, 0, NULL, NULL);
-            clEnqueueWriteBuffer(cq, bAy, CL_TRUE, 0, DATA_SIZE * sizeof(float), (void*)Ay, 0, NULL, NULL);
-            clEnqueueWriteBuffer(cq, bAz, CL_TRUE, 0, DATA_SIZE * sizeof(float), (void*)Az, 0, NULL, NULL);
-            clEnqueueWriteBuffer(cq, bBx, CL_TRUE, 0, DATA_SIZE * sizeof(float), (void*)Bx, 0, NULL, NULL);
-            clEnqueueWriteBuffer(cq, bBy, CL_TRUE, 0, DATA_SIZE * sizeof(float), (void*)By, 0, NULL, NULL);
-            clEnqueueWriteBuffer(cq, bBz, CL_TRUE, 0, DATA_SIZE * sizeof(float), (void*)Bz, 0, NULL, NULL);
-            clEnqueueWriteBuffer(cq, bCx, CL_TRUE, 0, DATA_SIZE * sizeof(float), (void*)Cx, 0, NULL, NULL);
-            clEnqueueWriteBuffer(cq, bCy, CL_TRUE, 0, DATA_SIZE * sizeof(float), (void*)Cy, 0, NULL, NULL);
-            clEnqueueWriteBuffer(cq, bCz, CL_TRUE, 0, DATA_SIZE * sizeof(float), (void*)Cz, 0, NULL, NULL);
-
-            clEnqueueWriteBuffer(cq, bx, CL_TRUE, 0, 1 * sizeof(float), (void*)x, 0, NULL, NULL);
-            clEnqueueWriteBuffer(cq, by, CL_TRUE, 0, 1 * sizeof(float), (void*)y, 0, NULL, NULL);
-            clEnqueueWriteBuffer(cq, bz, CL_TRUE, 0, 1 * sizeof(float), (void*)z, 0, NULL, NULL);
-
-            clEnqueueWriteBuffer(cq, bthickness, CL_TRUE, 0, 1 * sizeof(float), (void*)thickness, 0, NULL, NULL);
-            clEnqueueWriteBuffer(cq, bds, CL_TRUE, 0, 1 * sizeof(int), (void*)ds, 0, NULL, NULL);
-
-            clEnqueueWriteBuffer(cq, baxes, CL_TRUE, 0, 3 * sizeof(float), (void*)axes, 0, NULL, NULL);
-            cl_int ret;
-            cl_int data_size = DATA_SIZE;
-            size_t localws[3] = { data_size/GLOBAL_LOCAL_RATIO ,data_size / GLOBAL_LOCAL_RATIO,data_size / GLOBAL_LOCAL_RATIO };
-            size_t globalws[3] = { data_size,data_size,data_size};
-
-            ret = clEnqueueNDRangeKernel(cq, kernel, 3, NULL, globalws, localws, 0, NULL, NULL);
-            ret = clEnqueueReadBuffer(cq, bfield, CL_TRUE, 0, data_size * sizeof(float), (void*)field, 0, NULL, NULL);
-
-            if (cn < chunks.size() - 1) {
-                for (unsigned int i = 0; i < DATA_SIZE; i++) {
-                  //   CONSOLE_PRINTF_512("field[%d]=%f\n", i, field[i]);
-                    if (field[i] < d)
-                        d = field[i];
-                }
-            }
-            else {
-                for (unsigned int i = 0; i < lastChunkSize; i++) {
-                 //    CONSOLE_PRINTF_512("small chunk lcs %d field[%d]=%f\n",lastChunkSize,i,field[i]);
-                    if (field[i] < d)
-                        d = field[i];
-                }
-            }
-
-
-
-
-        
-        }
-        return d;
-    }
-
+   
     mat3 rotXZMat3(float angle) {
         return mat3(cos(angle), 0.0, sin(angle), 0.0, 1.0, 0.0, cos(angle + pi / 2.0), 0.0, sin(angle + pi / 2.0));
     }
@@ -385,7 +313,7 @@ namespace Geometry {
             
             for (unsigned int i = 0; i < DATA_SIZE; i++) {
                 if (field[i]==2048.0) {
-                    field[i] = 0.0;
+                    field[i] == 0.0;
                 }
             }
             
