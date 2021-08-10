@@ -314,24 +314,25 @@ namespace Geometry {
 
             for (unsigned int i = 0; i < DATA_SIZE; i++) {
                 if (field[i]==2048.0) {
-                  //  field[i] == 0.0;
+            
                    
                     glm::ivec3 octant = octree::get_octant(x[i], y[i], z[i]);
 
 
-                 //   CONSOLE_PRINTF_512("octant %d %d %d \n", octant.x, octant.y, octant.z);
-                 //   CONSOLE_PRINTF_512("index %d\n", octree::get_index(octant.x, octant.y, octant.z));
                     std::vector<Geometry::triangle>& sector = octree::query_sector(octant.x,octant.y,octant.z);
                     if (sector.size() == 0) {
-                        field[i] = 0.0; //todo make the sector query function return a union of sectors that contains at least one element
+                        field[i] = octree::sdf(x[i],y[i],z[i]); 
                     }
                     else {
 
 
-                        //   CONSOLE_PRINTF_512("populated sector\n");
+                      
                         for (int it = 0; it < sector.size(); it++) {
                             triangle tri = sector[it];
-                            float sdf = triangle_sdf(tri, vec3(x[i], y[i], z[i]), thickness[0]);
+                            float sdf = triangle_sdf(tri, 
+                                vec3(x[i], y[i], z[i]), 
+                                thickness[0]);
+
                             if (sdf < field[i])
                                 field[i] = sdf;
 
@@ -365,6 +366,8 @@ namespace Geometry {
         static int resX, resY, resZ;
         static int scale_down;
         static vec3 octant_half;
+
+        
 
         void init(
           float _axisX, float _axisY,float _axisZ,int _resX, int _resY, int _resZ, int _scale_down
@@ -416,6 +419,26 @@ namespace Geometry {
                     0, octaZ - 1)
             
             );
+        }
+
+        ivec3 get_octant_i(int ix, int iy, int iz) {
+            return ivec3(
+                clampi(
+                   ix,
+                    0, octaX - 1)
+                ,
+                clampi(
+                   iy,
+                    0, octaY - 1),
+                clampi(
+                    iz,
+                    0, octaZ - 1)
+
+            );
+        }
+
+        ivec3 neighbor(ivec3 octant, ivec3 delta) {
+            return get_octant_i(octant.x+delta.x, octant.y + delta.y, octant.z + delta.z);
         }
 
         vec3 get_octant_center(int ix, int iy, int iz) {
@@ -498,6 +521,28 @@ namespace Geometry {
 
         std::vector<Geometry::triangle> & get_brute() {
             return brute;
+        }
+
+        float sector_sdf( glm::ivec3 octant,vec3 pos) {
+            float d = 2048.0;
+            std::vector<Geometry::triangle> sector = odata[get_index(octant.x,octant.y,octant.z)];
+            for (int it = 0; it < sector.size(); it++) {
+                triangle tri = sector[it];
+                float sdf = triangle_sdf(tri,
+                    pos,
+                    thickness[0]);
+
+                if (sdf < d)
+                    d = sdf;
+
+            }
+            return d;
+        }
+
+        float sdf(float x, float y, float z) {
+
+            glm::ivec3 octant = octree::get_octant(x, y, z);
+            return 0.0f; //todo:: fill this
         }
 
     }

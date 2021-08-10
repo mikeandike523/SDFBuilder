@@ -45,6 +45,7 @@ namespace Geometry {
 		glm::ivec3 get_octant(float x, float y, float z);
 		std::vector<Geometry::triangle> & get_brute();
 		int get_index(int ix, int iy, int iz);
+		float sdf(float x, float y, float z);
 	}
 	
 }
