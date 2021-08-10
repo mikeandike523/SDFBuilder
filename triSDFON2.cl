@@ -1,4 +1,4 @@
-const float cut_s = 1.0;
+const float cut_s = 10.0;
 
 float dot2(float3 v) { return v.x * v.x + v.y * v.y + v.z * v.z; }
 const float signf(float f) { return f >= 0.0 ? 1.0 : -1.0; }
@@ -57,15 +57,14 @@ void triangle_sdf(__global float* Ax, __global float* Ay, __global float* Az,
     float3 pA = (float3)(Ax[id], Ay[id], Az[id]);
     float3 pB = (float3)(Bx[id], By[id], Bz[id]);
     float3 pC = (float3)(Cx[id], Cy[id], Cz[id]);
-    float3 cent = (pA + pB + pC) / (float3)(3.0);
-   float cut = max3(length(pA-cent),length(pB-cent),length(pC-cent))*cut_s;
- //  float cut = min3(axes[0],axes[1],axes[2])*cut_s;
+ //   float3 cent = (pA + pB + pC) / (float3)(3.0);
+   //float cut = max3(length(pA-cent),length(pB-cent),length(pC-cent))*cut_s;
 
 
     for (int i = 0; i < ds[0]; i++) {
         float3 pxyz = (float3)(x[i], y[i], z[i]);
-        float d = length(pxyz - cent);
-        if (d > cut) {continue; };
+      //  float d = length(pxyz - cent);
+    //    if (d > cut) {continue; };
         float fld = field[i];
         float nfld = sdTriangle(pA,pB,pC, pxyz, thickness[0]);
         if (nfld < field[i])

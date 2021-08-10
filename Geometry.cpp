@@ -273,7 +273,7 @@ namespace Geometry {
         ds[0] = DATA_SIZE;
         // CONSOLE_PRINTF_512("last chunk size %d\n", lastChunkSize);
       
-        /*
+        
         for (unsigned int cn = 0; cn < chunks.size(); cn++) {
             std::vector<triangle>& chunk = chunks[cn];
 
@@ -327,37 +327,19 @@ namespace Geometry {
 
         }
     
-        */
         
+        /*
         for (unsigned int i = 0; i < DATA_SIZE; i++) {
             if (field[i] == 2048.0) {
 
 
-              //  glm::ivec3 octant = octree::get_octant(x[i], y[i], z[i]);
-
-
-           //     std::vector<Geometry::triangle>& sector = //octree::query_sector(octant.x, octant.y, octant.z);
-               // if (sector.size() == 0) {
+  
                     field[i] = octree::sdf(x[i], y[i], z[i], thickness[0]);
-               // }
-             //   else {
-
-
-
-                 //   for (int it = 0; it < sector.size(); it++) {
-                   //     triangle tri = sector[it];
-                 //      float sdf = triangle_sdf(tri,
-                   //         vec3(x[i], y[i], z[i]),
-                  //          thickness[0]);
-
-                  //      if (sdf < field[i])
-                   //         field[i] = sdf;
-
-                  //  }
-              //  }
+              
 
             }
         }
+        */
 
         
     
@@ -475,15 +457,15 @@ namespace Geometry {
         void populate(std::vector<Geometry::triangle>& triangles) {
             CONSOLE_PRINTF_512("Building Octree...\n");
             brute = triangles;
-            odata.clear();
-            odata.reserve(octaX*octaY*octaZ);
-            for (int i = 0; i < octaX * octaY * octaZ; i++) {
-                odata.push_back(std::vector<Geometry::triangle>());
-            }
+          //  odata.clear();
+          //  odata.reserve(octaX*octaY*octaZ);
+          //  for (int i = 0; i < octaX * octaY * octaZ; i++) {
+          //      odata.push_back(std::vector<Geometry::triangle>());
+         //   }
           //  CONSOLE_PRINTF_512("numsectors: %d\n",odata.size());
             
             
-            for (unsigned int i = 0; i < triangles.size(); i++) {
+           /* for (unsigned int i = 0; i < triangles.size(); i++) {
            
                 triangle tri = triangles[i];
                 for (int ix = 0; ix < octaX; ix++) {
@@ -504,22 +486,12 @@ namespace Geometry {
                 
                 CONSOLE_PRINTF_512("%d of %d tris complete\n", i + 1, triangles.size());
 
-            }
+            }*/
 
 
 
             CONSOLE_PRINTF_512("Done.\n");
-            for (int ix = 0; ix < octaX; ix++) {
-
-                for (int iy = 0; iy < octaY; iy++) {
-
-                    for (int iz = 0; iz < octaZ; iz++) {
-
-                        int index = get_index(ix, iy, iz);
-                       // CONSOLE_PRINTF_512("sector %d: %d\n",index,odata.at(index).size());
-                    }
-                }
-            }
+ 
 
         }
 
@@ -534,59 +506,10 @@ namespace Geometry {
         std::vector<Geometry::triangle> & get_brute() {
             return brute;
         }
-/*
-        float sector_sdf( glm::ivec3 octant,vec3 pos) {
-            float d = 2048.0;
-            std::vector<Geometry::triangle> sector = odata[get_index(octant.x,octant.y,octant.z)];
-            for (int it = 0; it < sector.size(); it++) {
-                triangle tri = sector[it];
-                float sdf = triangle_sdf(tri,
-                    pos,
-                    thickness[0]);
 
-                if (sdf < d)
-                    d = sdf;
-
-            }
-            return d;
-        }
-        */
         float sdf(float x, float y, float z, float thick) {
 
             float d = 2048.0;
-/*
-            glm::ivec3 octant = octree::get_octant(x, y, z);
-            
-         
-           
-            float d = 2048.0;
-          //  int maxdR = Utils::max3i(octaX/2, octaY / 2, octaZ / 2);
-            int dR = 2;
-       
-
-
-            for (int dx = -dR; dx <= dR; dx++) {
-                for (int dy = -dR; dy <= dR; dy++) {
-                    for (int dz =-dR; dz <=dR; dz++) {
-                        ivec3 ncoords = neighbor(octant, ivec3(dx, dy, dz));
-                     
-                        std::vector<Geometry::triangle>& sector = odata[get_index(ncoords.x,ncoords.y,ncoords.z)];
-                        for (unsigned int it = 0; it < sector.size(); it++)     {
-                        
-                            float dn = triangle_sdf(sector.at(it),vec3(x,y,z),thick);
-
-                            if (dn < d)
-                                d = dn;
-                        
-                        }
-                     
-                    }
-
-                 
-
-                }
-            }
-            */
 
             std::vector<Geometry::triangle>& sector = brute;
             vec3 p(x, y, z);

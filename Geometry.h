@@ -10,8 +10,8 @@ using glm::mat3;
 namespace Geometry {
 
 	constexpr float pi = 3.141592;
-	constexpr int DATA_SIZE =512;
-	constexpr int GLOBAL_LOCAL_RATIO =16;
+	constexpr int DATA_SIZE =1024;
+	constexpr int GLOBAL_LOCAL_RATIO =64;
 
 
 	float sdBox(vec3 p, vec3 b);
