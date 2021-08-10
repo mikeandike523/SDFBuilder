@@ -37,7 +37,7 @@ static int winW = 640;
 static int winH = 480;
 static sf::RenderWindow * window;
 static std::wstring inputFilename = L".\\Knight.stl";
-static int min_resolution = 64;
+static int min_resolution = 48;
 static float triangle_thickness = 0.05f;
 static vector<triangle> triangles;
 static std::vector<std::vector<triangle>> triangle_chunks;
@@ -77,6 +77,7 @@ constexpr float minCameraZoom = 2.0;
 static HWND handle;
 constexpr float axes_scale = 1.2;
 constexpr float ozylim = pi / 2.0 * 0.8;
+constexpr float SCALE_DOWN = 8; //octree
 
 //opengl memory locations
 static GLuint _id_sdfTex;
@@ -411,6 +412,8 @@ void process_stl() {
 
     Geometry::set_axes(axisX, axisY, axisZ);
 
+   
+
     unsigned int num_items = resx * resy * resz; //rgb data where r=g=b=sdf value
     unsigned int num_data_items = num_items * 3;
     GROUPS = num_items / group_amt + 1;
@@ -465,8 +468,10 @@ void process_stl() {
 
     triangle_chunks = Geometry::chunk_triangles(triangles, &lastChunkSize);
 
-    
     CONSOLE_PRINTF_512("\nDone.\n");
+
+    Geometry::octree::init(axisX, axisY, axisZ, resx, resy, resz, SCALE_DOWN);
+    Geometry::octree::populate(triangles);
 
 
     stl_loaded = 1;

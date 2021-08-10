@@ -152,6 +152,7 @@
     <ClCompile Include="DragDrop.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="SDFBuilder.cpp" />
+    <ClCompile Include="tribox.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +161,7 @@
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="openfilename.hpp" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="tribox.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>

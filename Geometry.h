@@ -36,6 +36,16 @@ namespace Geometry {
 
 	mat3 rotXZMat3(float angle);
 	mat3 rotZYMat3(float angle);
+
+	namespace octree {
+		
+		void init(float,float,float,int,int,int,int);
+		void populate(std::vector<Geometry::triangle>& triangles);
+		std::vector<Geometry::triangle>& query_sector(int,int,int);
+		glm::ivec3 get_octant(float x, float y, float z);
+		std::vector<Geometry::triangle> & get_brute();
+		int get_index(int ix, int iy, int iz);
+	}
 	
 }
 

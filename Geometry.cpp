@@ -7,12 +7,14 @@
 #include <string>
 #include <Windows.h>
 #include <cmath>
+#include "tribox.h"
 using glm::vec3;
 using Geometry::triangle;
 using glm::mat3;
 using glm::length;
 using std::max;
 using std::min;
+using glm::ivec3;
 namespace Geometry {
     
     static float axisX, axisY, axisZ;
@@ -309,11 +311,33 @@ namespace Geometry {
 
             ret = clEnqueueNDRangeKernel(cq, kernel, 2, NULL, globalws, localws, 0, NULL, NULL);
             ret = clEnqueueReadBuffer(cq, bfield, CL_TRUE, 0, data_size * sizeof(float), (void*)field, 0, NULL, NULL);
-            
-            
+
             for (unsigned int i = 0; i < DATA_SIZE; i++) {
                 if (field[i]==2048.0) {
-                    field[i] == 0.0;
+                  //  field[i] == 0.0;
+                   
+                    glm::ivec3 octant = octree::get_octant(x[i], y[i], z[i]);
+
+
+                 //   CONSOLE_PRINTF_512("octant %d %d %d \n", octant.x, octant.y, octant.z);
+                 //   CONSOLE_PRINTF_512("index %d\n", octree::get_index(octant.x, octant.y, octant.z));
+                    std::vector<Geometry::triangle>& sector = octree::query_sector(octant.x,octant.y,octant.z);
+                    if (sector.size() == 0) {
+                        field[i] = 0.0; //todo make the sector query function return a union of sectors that contains at least one element
+                    }
+                    else {
+
+
+                        //   CONSOLE_PRINTF_512("populated sector\n");
+                        for (int it = 0; it < sector.size(); it++) {
+                            triangle tri = sector[it];
+                            float sdf = triangle_sdf(tri, vec3(x[i], y[i], z[i]), thickness[0]);
+                            if (sdf < field[i])
+                                field[i] = sdf;
+
+                        }
+                    }
+                    
                 }
             }
             
@@ -329,4 +353,153 @@ namespace Geometry {
     
         return field;
     }
+
+    namespace octree {
+        
+        static std::vector<std::vector<Geometry::triangle>> odata;
+        static std::vector<Geometry::triangle> brute;
+        static int octaX;
+        static int octaY;
+        static int octaZ;
+        static float axisX, axisY, axisZ;
+        static int resX, resY, resZ;
+        static int scale_down;
+        static vec3 octant_half;
+
+        void init(
+          float _axisX, float _axisY,float _axisZ,int _resX, int _resY, int _resZ, int _scale_down
+        ) {
+            axisX = _axisX;
+            axisY = _axisY;
+            axisZ = _axisZ;
+            resX = _resX;
+            resY = _resY;
+            resZ = _resX;
+            scale_down = _scale_down;
+            octaX = resX / scale_down;
+            octaY = resY / scale_down;
+            octaZ = resZ / scale_down;
+            octant_half = vec3(
+                axisX/(float)octaX,
+                axisY / (float)octaY,
+                axisZ / (float)octaZ
+            );
+
+         //   CONSOLE_PRINTF_512("octa: %d %d %d\n",octaX,octaY,octaZ);
+        
+        }
+    
+        int get_index(int ix, int iy, int iz) {
+            return ix * octaY * octaZ + iy * octaZ + iz;
+        }
+
+
+        inline int clampi(int a, int l, int h) {
+            if (a < l)
+                a = l;
+            if (a > h)
+                a = h;
+            return a;
+        }
+
+        ivec3 get_octant(float x, float y, float z) {
+            return ivec3(
+                clampi(
+                (int)(((float)octaX)* (x+axisX)/(2.0f*axisX)),
+                    0,octaX-1)
+                ,
+                clampi(
+                    (int)(((float)octaY) * (y+axisY) / (2.0f * axisY)),
+                    0, octaY - 1),
+                clampi(
+                    (int)(((float)octaZ) * (z + axisZ) / (2.0f * axisZ)),
+                    0, octaZ - 1)
+            
+            );
+        }
+
+        vec3 get_octant_center(int ix, int iy, int iz) {
+            return vec3(
+                -axisX+(float)ix/(float)octaX*2.0f*axisX+octant_half.x,
+                -axisY + (float)iy / (float)octaY * 2.0f * axisY + octant_half.y,
+                -axisZ + (float)iz / (float)octaZ * 2.0f * axisX + octant_half.z
+            );
+        }
+
+        int intersects_octant(Geometry::triangle& tri, int ix, int iy, int iz) {
+            vec3 bc = get_octant_center(ix,iy,iz);
+            vec3 bh = octant_half;
+
+            if (tribox::pointInsideBox(tri.A, bc, bh) ||
+                tribox::pointInsideBox(tri.B, bc, bh) ||
+                tribox::pointInsideBox(tri.C, bc, bh) ||
+                tribox::triboxInside(tri.A, tri.B, tri.C, bc, bh))
+                return 1;
+
+            return 0;
+        }
+
+        void populate(std::vector<Geometry::triangle>& triangles) {
+            CONSOLE_PRINTF_512("Building Octree...\n");
+            brute = triangles;
+            odata.clear();
+            odata.reserve(octaX*octaY*octaZ);
+            for (int i = 0; i < octaX * octaY * octaZ; i++) {
+                odata.push_back(std::vector<Geometry::triangle>());
+            }
+          //  CONSOLE_PRINTF_512("numsectors: %d\n",odata.size());
+            
+            
+            for (unsigned int i = 0; i < triangles.size(); i++) {
+                CONSOLE_PRINTF_512("%d of %d tris\n",i,triangles.size());
+                triangle tri = triangles[i];
+                for (int ix = 0; ix < octaX; ix++) {
+                    
+                    for (int iy = 0; iy < octaY; iy++) {
+
+                        for (int iz = 0; iz < octaZ; iz++) {
+
+                            if (intersects_octant(tri,ix,iy,iz)) {
+                                int index = get_index(ix, iy, iz);
+                                odata[index].push_back(tri);
+
+                            }
+                        }
+                    }
+                
+                }
+                
+            }
+
+
+
+            CONSOLE_PRINTF_512("Done.\n");
+            for (int ix = 0; ix < octaX; ix++) {
+
+                for (int iy = 0; iy < octaY; iy++) {
+
+                    for (int iz = 0; iz < octaZ; iz++) {
+
+                        int index = get_index(ix, iy, iz);
+                       // CONSOLE_PRINTF_512("sector %d: %d\n",index,odata.at(index).size());
+                    }
+                }
+            }
+
+        }
+
+
+    
+
+        std::vector<Geometry::triangle>& query_sector(int ix, int iy, int iz) {
+            int index = get_index(ix, iy, iz);
+            return odata[index];
+        }
+
+        std::vector<Geometry::triangle> & get_brute() {
+            return brute;
+        }
+
+    }
+
 }

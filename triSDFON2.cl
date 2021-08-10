@@ -56,8 +56,8 @@ void triangle_sdf(__global float* Ax, __global float* Ay, __global float* Az,
     float3 pB = (float3)(Bx[id], By[id], Bz[id]);
     float3 pC = (float3)(Cx[id], Cy[id], Cz[id]);
     float3 cent = (pA + pB + pC) / (float3)(3.0);
-    //float cut = max3(length(pA-cent),length(pB-cent),length(pC-cent))*cut_s;
-    float cut = median3(axes[0],axes[1],axes[2]);
+   float cut = max3(length(pA-cent),length(pB-cent),length(pC-cent))*cut_s;
+   //float cut = median3(axes[0],axes[1],axes[2]);
 
 
     for (int i = 0; i < ds[0]; i++) {
