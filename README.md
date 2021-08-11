@@ -43,11 +43,6 @@
 
 ## :warning: PC TEMPERATURE WARNING
 
-
-<span style='color:red'>
-PC Temperature Warning  
-</span>
-
 - This software is in an experimental stage, and is extremely taxing on your CPU and GPU. When using this software, watch for temperature increases in your CPU and GPU, as well as hot computer surfaces. The author of this reposityory, github user mikeandike523, is not liable for any damges to hardware or person. Use at your own risk. 
 
 ### Acknowledgements
