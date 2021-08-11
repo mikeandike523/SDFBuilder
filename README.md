@@ -43,7 +43,7 @@
 
 ## :warning: PC TEMPERATURE WARNING
 
-- This software is in an experimental stage, and is extremely taxing on your CPU and GPU. When using this software, watch for temperature increases in your CPU and GPU, as well as hot computer surfaces. The author of this reposityory, github user mikeandike523, is not liable for any damges to hardware or person. Use at your own risk. 
+- This software is in an experimental stage, and is extremely taxing on your CPU and GPU. When using this software, watch for temperature increases in your CPU and GPU, as well as hot computer surfaces. The author of this repository, github user mikeandike523, is not liable for any damages to hardware or person. Use at your own risk. 
 
 ### Acknowledgements
 
@@ -52,7 +52,7 @@
 
 ### License
 
-- This code is released under the [GNU GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) license. 
+- This codebase is released under the [GNU GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) license. 
 
 
 
