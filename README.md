@@ -42,8 +42,12 @@ This project is in a prelease state, and is not yet available as a standalone ap
 - Run the project by selecting `Debug→Start without debugger` in the visual studio toolbar
 - Drag and drop an STL file from any location into the application window
 - Use the live visualization to track conversion progress
+<<<<<<< HEAD
 - Locate the output SDF file in the STL source folder (e.g. `desktop/Knight.stl→desktop/Knight.sdf`)
 - Alternatively, you can drag an already-processed .sdf file onto the window for instant visualization.
+=======
+- Locate the output SDF file in the STL source folder (e.g. `Desktop\Knight.stl→Desktop\Knight.sdf`)
+>>>>>>> cfd47dc433c1b3e346ddb331c7c4ab84273b399f
 
 ##### Output File Format
 
