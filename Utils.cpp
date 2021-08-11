@@ -71,6 +71,15 @@ namespace Utils {
     float max2f(float a, float b) { return a > b ? a : b; }
     float max3f(float a, float b, float c) { return max2f(a, max2f(b, c)); }
 
+    void messagebox(std::wstring title, std::wstring message) {
 
+        int msgboxID = MessageBox(
+            NULL,
+           message.c_str(),
+            title.c_str(),
+            MB_ICONEXCLAMATION | MB_OK | MB_SETFOREGROUND
+        );
+
+    }
 
 }

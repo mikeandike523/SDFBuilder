@@ -23,7 +23,7 @@ namespace Utils{
     int max3i(int a, int b, int c);
     float max2f(float a, float b);
     float max3f(float a, float b, float c);
-    
+    void messagebox(std::wstring title, std::wstring message);
 
 }
 #endif

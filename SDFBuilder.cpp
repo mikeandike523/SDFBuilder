@@ -505,6 +505,8 @@ void process_stl() {
     export_sdf();
 
     worker_running = 0;
+    Utils::messagebox(L"Conversion Complete"s, L"Conversion Complete"s
+    );
    
 }
 
@@ -801,14 +803,8 @@ void DragDropCallback(wchar_t * fileName) {
         }
     }
     else {
-      
-            int msgboxID = MessageBox(
-                NULL,
-                L"Invalid File. .stl or .sdf file required.",
-                L"Invalid File",
-                MB_ICONEXCLAMATION | MB_OK
+        Utils::messagebox(L"Invalid File"s,L"Invalid File. .stl or .sdf file required."s
             );
-
     
     }
 
