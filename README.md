@@ -19,7 +19,6 @@
 ##### Requirements
 
 - Windows 10 PC with Intel I7 processor, and Nvidia GeForce 1060 or 1080.
-- Microsoft Visual Studio 2019.
 
 ##### Installation
 - Download and run the installer for SDFBuilder 0.1 from its [Release Page](https://github.com/mikeandike523/SDFBuilder/releases/tag/0.1).
