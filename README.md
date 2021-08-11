@@ -5,8 +5,8 @@
 ### Features
 
 - Import STL files with a simple drag-and drop.
-- Visualize STL files with eye-pleasing smooth shading
-- Generate signed distance fields, and export [Paule Bourke](http://paulbourke.net/dataformats/volumetric/#:~:text=Volume%20data%20format&text=A%20bit%20like%20the%20PPM,as%20having%20more%20header%20fields.) volumetric data
+- Visualize STL files with eye-pleasing smooth shading.
+- Generate signed distance fields, and export as volumetric data.
 
 ### Examples
 
@@ -16,43 +16,27 @@
 
 ### Usage
 
-This project is in a prelease state, and is not yet available as a standalone application. The project can be built from source, given the requirements and steps below.
-
 ##### Requirements
 
 - Windows 10 PC with Intel I7 processor, and Nvidia GeForce 1060 or 1080.
-- Microsoft Visual Studio 2019
+- Microsoft Visual Studio 2019.
 
-##### Build Process
-
-- Clone or download this repo
-
-  ```
-  git clone https://github.com/mikeandike523/SDFBuilder
-  ```
-
-- Open `SDFBuilder/SDFBuilder.sln` with Visual Studio 2019
-
-- Select  the `Debug, x86` build configuration in the Visual Studio toolbar
-
-- Select `Build→Build Solution` in the Visual Studio toolbar
+##### Installation
+- Download and run the installer for SDFBuilder 0.1 from its [Release Page](https://github.com/mikeandike523/SDFBuilder/releases/tag/0.1).
 
 ##### Converting and Visualizing Files
 
-- Run the project by selecting `Debug→Start without debugger` in the visual studio toolbar
-- Drag and drop an STL file from any location into the application window
-- Use the live visualization to track conversion progress
-<<<<<<< HEAD
-- Locate the output SDF file in the STL source folder (e.g. `desktop/Knight.stl→desktop/Knight.sdf`)
+- Run the program from the windows start menu or search bar.
+- Drag and drop an STL file from any location into the application window.
+- Use the live visualization to track conversion progress. A dialog will popup when conversion is complete.
+- Locate the output SDF file in the STL source folder (e.g. `desktop/Knight.stl→desktop/Knight.sdf`).
 - Alternatively, you can drag an already-processed .sdf file onto the window for instant visualization.
-=======
-- Locate the output SDF file in the STL source folder (e.g. `Desktop\Knight.stl→Desktop\Knight.sdf`)
->>>>>>> cfd47dc433c1b3e346ddb331c7c4ab84273b399f
+
 
 ##### Output File Format
 
-- Output files are stored with extension `.sdf`, using [Paule Bourke's](http://paulbourke.net/dataformats/volumetric/#:~:text=Volume%20data%20format&text=A%20bit%20like%20the%20PPM,as%20having%20more%20header%20fields.) volumetric data format. However, the binary region consists of floats with bit-width as specified on line 5 (typically, 4 bytes = 32 bits for floats), instead of signed integers.
-- The Y and Z coordinates of the initial model are swapped
+- Output files are stored with extension `.sdf`, using a modified version of Paule Bourke's [Volumetric Data Format](http://paulbourke.net/dataformats/volumetric/#:~:text=Volume%20data%20format&text=A%20bit%20like%20the%20PPM,as%20having%20more%20header%20fields.) spec. For SDFBuilder, the output file's binary region consists of floats with bit-width as specified on line 5 (typically, 4 bytes = 32 bits for floats), instead of signed integers.
+- The Y and Z coordinates of the initial model are swapped.
 - The model is centered at the origin, and scaled such that its smallest dimension is 2 units with .4 units of padding.
 
 ### Caution
