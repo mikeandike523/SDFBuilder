@@ -34,6 +34,7 @@
 - Use the live visualization to track conversion progress. A dialog will popup when conversion is complete.
 - Locate the output SDF file in the STL source folder (e.g. `desktop/Knight.stl→desktop/Knight.sdf`).
 - Alternatively, you can drag an already-processed .sdf file onto the window for instant visualization.
+- Software is tested for models up to 3000 triangles. Use software such as [Instant Meshes](https://github.com/wjakob/instant-meshes) to simplify complex models.
 
 ##### Output File Format
 
