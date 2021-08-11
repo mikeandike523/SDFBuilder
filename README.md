@@ -10,9 +10,12 @@
 
 ### Examples
 
-| ![](https://github.com/mikeandike523/SDFBuilder/blob/main/ReadmeFiles/screenshot_knight.png?raw=true){:height="128px" width="96px"} |
-| :----------------------------------------------------------: |
-|            ![](https://github.com/mikeandike523/SDFBuilder/blob/main/ReadmeFiles/screenshot_helios.png?raw=true =128x96){:height="128px" width="96px"}            |
+<table>
+<tr>
+<td><img src="https://github.com/mikeandike523/SDFBuilder/blob/main/ReadmeFiles/screenshot_knight.png?raw=true" width="256px" height="192px"/></td>
+<td><img src="https://github.com/mikeandike523/SDFBuilder/blob/main/ReadmeFiles/screenshot_helios.png?raw=true" width="256px" height="192px"/></td> 
+</tr>
+</table>
 
 ### Usage
 
@@ -39,6 +42,11 @@
 - The model is centered at the origin, and scaled such that its smallest dimension is 2 units with .4 units of padding.
 
 ## :warning: PC TEMPERATURE WARNING
+
+
+<span style='color:red'>
+PC Temperature Warning  
+</span>
 
 - This software is in an experimental stage, and is extremely taxing on your CPU and GPU. When using this software, watch for temperature increases in your CPU and GPU, as well as hot computer surfaces. The author of this reposityory, github user mikeandike523, is not liable for any damges to hardware or person. Use at your own risk. 
 
