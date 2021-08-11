@@ -38,10 +38,9 @@
 - The Y and Z coordinates of the initial model are swapped.
 - The model is centered at the origin, and scaled such that its smallest dimension is 2 units with .4 units of padding.
 
-### Caution!
+## :warning: PC TEMPERATURE WARNING
 
-This software is highly taxing on your CPU and GPU, and can cause temperature increases in these processors. Ensure your PC protects against temperature spikes, and watch for hot computer surfaces (especially with laptops).
-
+- This software is in an experimental stage, and is extremely taxing on your CPU and GPU. When using this software, watch for temperature increases in your CPU and GPU, as well as hot computer surfaces. The author of this reposityory, github user mikeandike523, is not liable for any damges to hardware or person. Use at your own risk. 
 ### Acknowledgements
 
 - Inigo Quilez, for providing GLSL algorithms for the explicit signed distance functions used in this program, as well as an algorithm for smooth minimum. See articles [Signed Distance functions](https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm), [Distance to Triangle](https://www.iquilezles.org/www/articles/triangledistance/triangledistance.htm), and [Smooth Minimum](https://www.iquilezles.org/www/articles/smin/smin.htm).
