@@ -38,7 +38,10 @@
 - The Y and Z coordinates of the initial model are swapped.
 - The model is centered at the origin, and scaled such that its smallest dimension is 2 units with .4 units of padding.
 
-## :warning: PC TEMPERATURE WARNING
+## :warning: 
+<div style="color:red;fontSize:24px">
+  PC TEMPERATURE WARNING
+</div>
 
 - This software is in an experimental stage, and is extremely taxing on your CPU and GPU. When using this software, watch for temperature increases in your CPU and GPU, as well as hot computer surfaces. The author of this reposityory, github user mikeandike523, is not liable for any damges to hardware or person. Use at your own risk. 
 ### Acknowledgements
