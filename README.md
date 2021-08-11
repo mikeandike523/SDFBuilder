@@ -38,7 +38,7 @@
 - The Y and Z coordinates of the initial model are swapped.
 - The model is centered at the origin, and scaled such that its smallest dimension is 2 units with .4 units of padding.
 
-### Caution
+### Caution!
 
 This software is highly taxing on your CPU and GPU, and can cause temperature increases in these processors. Ensure your PC protects against temperature spikes, and watch for hot computer surfaces (especially with laptops).
 
