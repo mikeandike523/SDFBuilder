@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BourkeExport.cpp" />
     <ClCompile Include="Dependencies\imgui-master\imgui.cpp" />
     <ClCompile Include="Dependencies\imgui-master\imgui_demo.cpp" />
     <ClCompile Include="Dependencies\imgui-master\imgui_draw.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BourkeExport.h" />
     <ClInclude Include="debugprint.h" />
     <ClInclude Include="DragDrop.h" />
     <ClInclude Include="Geometry.h" />

@@ -43,12 +43,13 @@ This project is in a prelease state, and is not yet available as a standalone ap
 - Drag and drop an STL file from any location into the application window
 - Use the live visualization to track conversion progress
 - Locate the output SDF file in the STL source folder (e.g. `desktop/Knight.stl→desktop/Knight.sdf`)
+- Alternatively, you can drag an already-processed .sdf file onto the window for instant visualization.
 
 ##### Output File Format
 
-- Output files are stored with extension `.sdf`, using [Paule Bourke's](http://paulbourke.net/dataformats/volumetric/#:~:text=Volume%20data%20format&text=A%20bit%20like%20the%20PPM,as%20having%20more%20header%20fields.) volumetric data format
+- Output files are stored with extension `.sdf`, using [Paule Bourke's](http://paulbourke.net/dataformats/volumetric/#:~:text=Volume%20data%20format&text=A%20bit%20like%20the%20PPM,as%20having%20more%20header%20fields.) volumetric data format. However, the binary region consists of floats with bit-width as specified on line 5 (typically, 4 bytes = 32 bits for floats), instead of signed integers.
 - The Y and Z coordinates of the initial model are swapped
-- The model is centered at the origin, and scaled such that its smallest dimension is 2 units
+- The model is centered at the origin, and scaled such that its smallest dimension is 2 units with .4 units of padding.
 
 ### Caution
 
@@ -58,7 +59,6 @@ This software is highly taxing on your CPU and GPU, and can cause temperature in
 
 - Inigo Quilez, for providing GLSL algorithms for the explicit signed distance functions used in this program, as well as an algorithm for smooth minimum. See articles [Signed Distance functions](https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm), [Distance to Triangle](https://www.iquilezles.org/www/articles/triangledistance/triangledistance.htm), and [Smooth Minimum](https://www.iquilezles.org/www/articles/smin/smin.htm).
 - Thingiverse users dosse91 and Miquel Adell for the [Helios](https://www.thingiverse.com/thing:2887298) and [chess knight](https://www.thingiverse.com/thing:3077961) example models.
-- Various StackOverflow users for C++ guidance, though no code was directly copied
 
 ### License
 

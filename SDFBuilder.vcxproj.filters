@@ -48,6 +48,9 @@
     <ClCompile Include="tribox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BourkeExport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debugprint.h">
@@ -69,6 +72,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tribox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BourkeExport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

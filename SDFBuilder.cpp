@@ -21,6 +21,7 @@
 #include <algorithm>
 #include "DragDrop.h"
 #include <cstring>
+#include "BourkeExport.h"
 
 
 //using directives
@@ -120,6 +121,11 @@ void mousedrag(int dX, int dY) {
     if (fabs(rotZY) > ozylim) {
         rotZY += dOZY;
     }
+}
+
+void export_sdf() {
+
+    BourkeExport::export_sdf(inputFilename,glm::vec3(axisX,axisY,axisZ),glm::ivec3(resx,resy,resz),texData.data());
 }
 
 void OpenCL_Test() {
@@ -496,7 +502,10 @@ void process_stl() {
     while (Geometry::get_pool_amt() > 0) { }
     CONSOLE_PRINTF_512("done.\n");
 
+    export_sdf();
+
     worker_running = 0;
+   
 }
 
                            
@@ -762,11 +771,50 @@ int main() {
 
 
 void DragDropCallback(wchar_t * fileName) {
-    if (!worker_running) {
-        inputFilename = std::wstring(fileName);
-        worker = std::thread(process_stl);
-        worker.detach();
+
+    int N = std::wstring(fileName).length();
+    std::wstring extension = std::wstring(fileName).substr(N - 4, 4);
+    std::string extensionA = Utils::convertWtoA(extension);
+    extensionA = Utils::stringToLower(extensionA);
+
+    if (extensionA == ".stl"s) {
+        if (!worker_running) {
+            inputFilename = std::wstring(fileName);
+            worker = std::thread(process_stl);
+            worker.detach();
+        }
     }
+ 
+    else if (extensionA == ".sdf"s) {
+        if (!worker_running) {
+            worker_running = 1;
+            inputFilename = std::wstring(fileName);
+
+            BourkeExport::import_sdf(inputFilename,texData,&resx,&resy,&resz,&axisX,&axisY,&axisZ);
+            sdf_needs_update = 1;
+            progress = 1.0f;
+            sample_count = resx * resy * resz;
+            stl_loaded = 1;
+            worker_running = 0;
+
+
+        }
+    }
+    else {
+      
+            int msgboxID = MessageBox(
+                NULL,
+                L"Invalid File. .stl or .sdf file required.",
+                L"Invalid File",
+                MB_ICONEXCLAMATION | MB_OK
+            );
+
+    
+    }
+
+
+
+
 }
 
 //open a window without console
