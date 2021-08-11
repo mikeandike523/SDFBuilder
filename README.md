@@ -54,6 +54,11 @@
 
 - This codebase is released under the [GNU GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) license. 
 
+### Contact
+
+- For bug reports, suggestions, and networking:
+  - Email: michaelsohnenacademic@gmail.com
+  - LinkedIn: https://www.linkedin.com/in/michael-sohnen-a2454b1b2/
 
 
 
