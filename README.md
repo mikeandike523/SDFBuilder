@@ -35,7 +35,7 @@
 
 ##### Output File Format
 
-- Output files are stored with extension `.sdf`, using a modified version of Paule Bourke's [Volumetric Data Format](http://paulbourke.net/dataformats/volumetric/#:~:text=Volume%20data%20format&text=A%20bit%20like%20the%20PPM,as%20having%20more%20header%20fields.) spec. For SDFBuilder, the output file's binary region consists of floats with bit-width as specified on line 5 (typically, 4 bytes = 32 bits for floats), instead of signed integers.
+- Output files are stored with extension `.sdf`, using a modified version of Paule Bourke's [Volumetric Data Format](http://paulbourke.net/dataformats/volumetric/#:~:text=Volume%20data%20format&text=A%20bit%20like%20the%20PPM,as%20having%20more%20header%20fields.) spec. For SDFBuilder, the output file's binary region consists of 4 byte floats, instead of signed integers.
 - The Y and Z coordinates of the initial model are swapped.
 - The model is centered at the origin, and scaled such that its smallest dimension is 2 units with .4 units of padding.
 
