@@ -822,6 +822,18 @@ int APIENTRY wWinMain(_In_     HINSTANCE hInstance,
    
     DragDrop::init(hInstance, hPrevInstance,NULL,1,&handle,DragDropCallback);
    
+    int numargs;
+    LPWSTR* args= CommandLineToArgvW(
+        lpCmdLine,
+        &numargs
+    );
+
+    if (numargs == 2) {
+        LPWSTR arg = args[1];
+        DragDropCallback(arg);
+    }
+
+
 	return main();
     return 0;
 }
